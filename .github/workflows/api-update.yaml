@@ -1,7 +1,7 @@
 name: Update SDK
 on:
   schedule:
-    - cron: '5 * * * *'
+    - cron: '*/5 * * * *'
   ## Manual request that can be used for testing and retriggering failed updates
 jobs:
   generate_client:
