@@ -1,8 +1,7 @@
 name: Update SDK
 on:
-  ## External event triggered by Repository
-  repository_dispatch:
-    types: [openapi-spec-change]
+  schedule:
+    - cron: '*/5 * * * *'
   ## Manual request that can be used for testing and retriggering failed updates
   workflow_dispatch:
     inputs:
