@@ -3,17 +3,6 @@ on:
   schedule:
     - cron: '*/5 * * * *'
   ## Manual request that can be used for testing and retriggering failed updates
-  workflow_dispatch:
-    inputs:
-      url: 
-        description: 'Type of SDK event to handle'     
-        required: true
-        type: choice
-        options:
-        - "https://raw.githubusercontent.com/bf2fc6cc711aee1a0c2a/kas-fleet-manager/main/openapi/kas-fleet-manager.yaml"
-        - "https://raw.githubusercontent.com/bf2fc6cc711aee1a0c2a/kas-fleet-manager/main/openapi/connector_mgmt.yaml"
-        - "https://raw.githubusercontent.com/bf2fc6cc711aee1a0c2a/srs-fleet-manager/main/core/src/main/resources/srs-fleet-manager.json"
-
 jobs:
   generate_client:
     env:
