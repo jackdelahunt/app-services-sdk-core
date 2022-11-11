@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Generate SDKs
-        run: bash scripts/generate_go.sh
+        run: bash scripts/generate-go.sh
       - name: Make pull request
         uses: peter-evans/create-pull-request@v4
         with:
