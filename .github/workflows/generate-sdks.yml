@@ -1,0 +1,27 @@
+name: Generate SDK
+on:
+  workflow_dispatch:
+jobs:
+  generate_client:
+    env:
+      APP_SERVICES_TOKEN: ${{ secrets.APP_SERVICES_TOKEN }}
+      BF2_TOKEN: ${{ secrets.BF2_TOKEN }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Generate SDKs
+        run: bash scripts/generate_go.sh
+      - name: Make pull request
+        uses: peter-evans/create-pull-request@v4
+        with:
+            title: "fix(${{ github.event.client_payload.id }}): automated openapi files update"
+            commit-message: "fix(${{ github.event.client_payload.id }}): update for ${{ github.event.client_payload.id }} SDK"
+            author: "app-services-ci <app-services-ci@users.noreply.github.com>"
+            branch: chore/generate-api-clients
+            branch-suffix: timestamp
+            delete-branch: true
+            body: |
+              _This pull request was auto-generated_
+
+              This PR adds the latest openapi files
