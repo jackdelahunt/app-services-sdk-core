@@ -15,8 +15,8 @@ jobs:
       - name: Make pull request
         uses: peter-evans/create-pull-request@v4
         with:
-            title: "fix(${{ github.event.client_payload.id }}): new generation of SDKs update"
-            commit-message: "fix(${{ github.event.client_payload.id }}): update for ${{ github.event.client_payload.id }} SDK"
+            title: "fix: new generation of SDKs update"
+            commit-message: "Regenerated SDKs - this pr is auto generated"
             author: "app-services-ci <app-services-ci@users.noreply.github.com>"
             branch: chore/generate-api-clients
             branch-suffix: timestamp
