@@ -1,4 +1,4 @@
-module github.com/redhat-developer/app-services-sdk-go/kafkamgmt
+module github.com/jackdelahunt/app-services-sdk-go/kafkamgmt
 
 go 1.15
 

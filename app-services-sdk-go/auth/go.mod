@@ -1,4 +1,4 @@
-module github.com/redhat-developer/app-services-sdk-go/auth
+module github.com/jackdelahunt/app-services-sdk-go/auth
 
 go 1.15
 
