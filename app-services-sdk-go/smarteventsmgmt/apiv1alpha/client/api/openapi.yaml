@@ -15,14 +15,14 @@ servers:
 - url: https://api.openshift.com
 - url: /
 tags:
-- description: The API that allow the user to retrieve, create or delete Bridge instances.
+- description: "The API that allow the user to retrieve, create or delete Bridge instances."
   name: Bridges
 - description: List Supported Cloud Providers and Regions
   name: Cloud Providers
 - description: List and get the error definitions from the error catalog.
   name: Error Catalog
-- description: The API that allow the user to retrieve, create or delete Processors
-    of a Bridge instance.
+- description: "The API that allow the user to retrieve, create or delete Processors\
+    \ of a Bridge instance."
   name: Processors
 paths:
   /api/smartevents_mgmt/v2/bridges:
@@ -853,6 +853,7 @@ components:
         reason: reason
         code: code
         id: 0
+        type: null
       properties:
         id:
           format: int32
@@ -944,7 +945,6 @@ components:
       type: object
     BridgeRequest:
       example:
-        error_handler: '{}'
         name: name
         cloud_provider: cloud_provider
         region: region
@@ -961,8 +961,6 @@ components:
           minLength: 1
           nullable: false
           type: string
-        error_handler:
-          $ref: '#/components/schemas/Action'
       required:
       - cloud_provider
       - name
@@ -1352,8 +1350,9 @@ components:
         page: 0
         items:
         - owner: owner
+          status_message: status_message
           submitted_at: 2000-01-23T04:56:07.000+00:00
-          flows: '{}'
+          flows: "{}"
           kind: kind
           name: name
           id: id
@@ -1362,8 +1361,9 @@ components:
           modified_at: 2000-01-23T04:56:07.000+00:00
           status: ""
         - owner: owner
+          status_message: status_message
           submitted_at: 2000-01-23T04:56:07.000+00:00
-          flows: '{}'
+          flows: "{}"
           kind: kind
           name: name
           id: id
@@ -1399,7 +1399,7 @@ components:
       type: object
     ProcessorRequest:
       example:
-        flows: '{}'
+        flows: "{}"
         name: name
       properties:
         name:
@@ -1416,8 +1416,9 @@ components:
     ProcessorResponse:
       example:
         owner: owner
+        status_message: status_message
         submitted_at: 2000-01-23T04:56:07.000+00:00
-        flows: '{}'
+        flows: "{}"
         kind: kind
         name: name
         id: id
@@ -1458,6 +1459,8 @@ components:
         flows:
           nullable: false
           type: object
+        status_message:
+          type: string
       required:
       - flows
       - href
@@ -1487,6 +1490,7 @@ components:
       - size
       - total
       type: object
+      example: null
   securitySchemes:
     bearer:
       scheme: Bearer

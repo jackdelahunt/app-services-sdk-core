@@ -15,6 +15,8 @@ tags:
     description: Errors returned by the API.
   - name: security
     description: Security related endpoints.
+  - name: enterprise-dataplane-clusters
+    description: Enterprise data plane clusters registration and management endpoints.   
 servers:
   - url: https://api.openshift.com
     description: Main (production) server
@@ -1043,7 +1045,7 @@ components:
             - multi_az
           properties:
             status:
-              description: "Values: [accepted, preparing, provisioning, ready, failed, deprovision, deleting] "
+              description: "Values: [accepted, preparing, provisioning, ready, failed, deprovision, deleting, suspending, suspended, resuming] "
               type: string
             cloud_provider:
               description: "Name of Cloud used to deploy. For example AWS"
@@ -2158,3 +2160,9 @@ components:
           is '404', code is 'CLUSTERS-MGMT-404' and operation identifier is '1g5or50viu07oealuehrkc26dgftj1ac':
           Cluster '1g5d88q0lrcdv4g7alb7slfgnj3dhbsj' not found)"
         operation_id: "1iYTsWry6nsqb2sNmFj5bXpD7Ca"
+    EnterpriseOsdClusterPayloadExample:
+      value:
+        cluster_id: "1234abcd1234abcd1234abcd1234abcd"
+        cluster_external_id: "69d631de-9b7f-4bc2-bf4f-4d3295a7b25e"
+        cluster_ingress_dns_name: "apps.enterprise-aws.awdk.s1.devshift.org"
+        kafka_machine_pool_node_count: 9

@@ -1,4 +1,4 @@
-module github.com/redhat-developer/app-services-sdk-go/serviceaccountmgmt
+module github.com/jackdelahunt/app-services-sdk-go/serviceaccountmgmt
 
 go 1.15
 

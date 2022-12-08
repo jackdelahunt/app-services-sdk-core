@@ -36,8 +36,8 @@ func main() {
     bridgeRequest := *openapiclient.NewBridgeRequest("Name_example", "CloudProvider_example", "Region_example") // BridgeRequest |  (optional)
 
     configuration := openapiclient.NewConfiguration()
-    api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.BridgesApi.BridgesAPICreateBridge(context.Background()).BridgeRequest(bridgeRequest).Execute()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.BridgesApi.BridgesAPICreateBridge(context.Background()).BridgeRequest(bridgeRequest).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `BridgesApi.BridgesAPICreateBridge``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -102,8 +102,8 @@ func main() {
     bridgeId := "bridgeId_example" // string | 
 
     configuration := openapiclient.NewConfiguration()
-    api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.BridgesApi.BridgesAPIDeleteBridge(context.Background(), bridgeId).Execute()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.BridgesApi.BridgesAPIDeleteBridge(context.Background(), bridgeId).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `BridgesApi.BridgesAPIDeleteBridge``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -170,8 +170,8 @@ func main() {
     bridgeId := "bridgeId_example" // string | 
 
     configuration := openapiclient.NewConfiguration()
-    api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.BridgesApi.BridgesAPIGetBridge(context.Background(), bridgeId).Execute()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.BridgesApi.BridgesAPIGetBridge(context.Background(), bridgeId).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `BridgesApi.BridgesAPIGetBridge``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -243,8 +243,8 @@ func main() {
     status := []openapiclient.ManagedResourceStatus{openapiclient.ManagedResourceStatus("accepted")} // []ManagedResourceStatus |  (optional)
 
     configuration := openapiclient.NewConfiguration()
-    api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.BridgesApi.BridgesAPIGetBridges(context.Background()).Name(name).Page(page).Size(size).Status(status).Execute()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.BridgesApi.BridgesAPIGetBridges(context.Background()).Name(name).Page(page).Size(size).Status(status).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `BridgesApi.BridgesAPIGetBridges``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -313,8 +313,8 @@ func main() {
     bridgeRequest := *openapiclient.NewBridgeRequest("Name_example", "CloudProvider_example", "Region_example") // BridgeRequest |  (optional)
 
     configuration := openapiclient.NewConfiguration()
-    api_client := openapiclient.NewAPIClient(configuration)
-    resp, r, err := api_client.BridgesApi.BridgesAPIUpdateBridge(context.Background(), bridgeId).BridgeRequest(bridgeRequest).Execute()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.BridgesApi.BridgesAPIUpdateBridge(context.Background(), bridgeId).BridgeRequest(bridgeRequest).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `BridgesApi.BridgesAPIUpdateBridge``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
