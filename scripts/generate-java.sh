@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 ## OPENAPI_FILENAME=yourapi generate_js.sh 
 
+# if input file is a empty string that means this is a workflow run
+# manualy and we want to generate all sdks 
 INPUT_FILE=`basename $1`
 
 # if the input file is openapi.yaml that means it should be 
@@ -22,7 +24,7 @@ echo "Generating SDKs"
 
 TEMPLATES_DIR="$(dirname $0)/templates"
 
-if [ "$INPUT_FILE" = "kas-fleet-manager.yaml" ];
+if [ "$INPUT_FILE" = "kas-fleet-manager.yaml" ] || [ "$INPUT_FILE" = "" ];
 then
     GROUP_ID="com.redhat.cloud"
     ARTIFACT_ID="kafka-management-sdk"
@@ -41,7 +43,7 @@ then
         --ignore-file-override=.openapi-generator-ignore
 fi
 
-if [ "$INPUT_FILE" = "srs-fleet-manager.json" ];
+if [ "$INPUT_FILE" = "srs-fleet-manager.json" ] || [ "$INPUT_FILE" = "" ];
 then
     GROUP_ID="com.redhat.cloud"
     ARTIFACT_ID="registry-management-sdk"
@@ -61,7 +63,7 @@ then
         --ignore-file-override=.openapi-generator-ignore
 fi
 
-if [ "$INPUT_FILE" = "kafka-admin-rest.yaml" ];
+if [ "$INPUT_FILE" = "kafka-admin-rest.yaml" ] || [ "$INPUT_FILE" = "" ];
 then
     GROUP_ID="com.redhat.cloud"
     ARTIFACT_ID="kafka-instance-sdk"
@@ -80,7 +82,7 @@ then
         --ignore-file-override=.openapi-generator-ignore
 fi
 
-if [ "$INPUT_FILE" = "connector_mgmt.yaml" ];
+if [ "$INPUT_FILE" = "connector_mgmt.yaml" ] || [ "$INPUT_FILE" = "" ];
 then
     GROUP_ID="com.redhat.cloud"
     ARTIFACT_ID="connector-management-sdk"
@@ -100,7 +102,7 @@ then
         --ignore-file-override=.openapi-generator-ignore
 fi
 
-if [ "$INPUT_FILE" = "service-accounts.yaml" ];
+if [ "$INPUT_FILE" = "service-accounts.yaml" ] || [ "$INPUT_FILE" = "" ];
 then
     GROUP_ID="com.redhat.cloud"
     ARTIFACT_ID="service-accounts-sdk"
@@ -119,7 +121,7 @@ then
         --ignore-file-override=.openapi-generator-ignore
 fi
 
-if [ "$INPUT_FILE" = "smartevents_mgmt_v2.yaml" ];
+if [ "$INPUT_FILE" = "smartevents_mgmt_v2.yaml" ] || [ "$INPUT_FILE" = "" ];
 then
     GROUP_ID="com.redhat.cloud"
     ARTIFACT_ID="smartevents-management-sdk"
@@ -138,7 +140,7 @@ then
         --ignore-file-override=.openapi-generator-ignore
 fi
 
-if [ "$INPUT_FILE" = "registry-instance.json" ];
+if [ "$INPUT_FILE" = "registry-instance.json" ] || [ "$INPUT_FILE" = "" ];
 then
     GROUP_ID="com.redhat.cloud"
     OPENAPI_FILENAME=".openapi/registry-instance.json"

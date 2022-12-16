@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 ## OPENAPI_FILENAME=yourapi generate.sh 
 
+# if input file is a empty string that means this is a workflow run
+# manualy and we want to generate all sdks 
 INPUT_FILE=`basename $1`
 
 # if the input file is openapi.yaml that means it should be 
@@ -40,7 +42,7 @@ npx @openapitools/openapi-generator-cli version-manager set 6.2.1
 echo "Generating Go SDKs"
 additional_properties="generateInterfaces=true,enumClassPrefix=true"
 
-if [ "$INPUT_FILE" = "kas-fleet-manager.yaml" ];
+if [ "$INPUT_FILE" = "kas-fleet-manager.yaml" ] || [ "$INPUT_FILE" = "" ];
 then
     OPENAPI_FILENAME=".openapi/kas-fleet-manager.yaml"
     PACKAGE_NAME="kafkamgmtclient"
@@ -49,7 +51,7 @@ then
     generate_sdk $OPENAPI_FILENAME $OUTPUT_PATH $PACKAGE_NAME
 fi
 
-if [ "$INPUT_FILE" = "srs-fleet-manager.json" ];
+if [ "$INPUT_FILE" = "srs-fleet-manager.json" ] || [ "$INPUT_FILE" = "" ];
 then
 OPENAPI_FILENAME=".openapi/srs-fleet-manager.json"
 PACKAGE_NAME="registrymgmtclient"
@@ -58,7 +60,7 @@ OUTPUT_PATH="app-services-sdk-go/registrymgmt/apiv1/client"
 generate_sdk $OPENAPI_FILENAME $OUTPUT_PATH $PACKAGE_NAME
 fi
 
-if [ "$INPUT_FILE" = "connector_mgmt.yaml" ];
+if [ "$INPUT_FILE" = "connector_mgmt.yaml" ] || [ "$INPUT_FILE" = "" ];
 then
     OPENAPI_FILENAME=".openapi/connector_mgmt.yaml"
     PACKAGE_NAME="connectormgmtclient"
@@ -67,7 +69,7 @@ then
     generate_sdk $OPENAPI_FILENAME $OUTPUT_PATH $PACKAGE_NAME
 fi
 
-if [ "$INPUT_FILE" = "kafka-admin-rest.yaml" ];
+if [ "$INPUT_FILE" = "kafka-admin-rest.yaml" ] || [ "$INPUT_FILE" = "" ];
 then
     OPENAPI_FILENAME=".openapi/kafka-admin-rest.yaml"
     PACKAGE_NAME="kafkainstanceclient"
@@ -76,7 +78,7 @@ then
     generate_sdk $OPENAPI_FILENAME $OUTPUT_PATH $PACKAGE_NAME
 fi
 
-if [ "$INPUT_FILE" = "ams.json" ];
+if [ "$INPUT_FILE" = "ams.json" ] || [ "$INPUT_FILE" = "" ];
 then
     OPENAPI_FILENAME=".openapi/ams.json"
     PATCH_FILE=".openapi/ams.patch" 
@@ -95,7 +97,7 @@ then
     git checkout -- $OPENAPI_FILENAME
 fi
 
-if [ "$INPUT_FILE" = "registry-instance.json" ];
+if [ "$INPUT_FILE" = "registry-instance.json" ] || [ "$INPUT_FILE" = "" ];
 then
     echo "generating registry instance SDK "
 
@@ -125,7 +127,7 @@ then
     generate_sdk $OPENAPI_FILENAME $OUTPUT_PATH $PACKAGE_NAME
 fi
 
-if [ "$INPUT_FILE" = "service-accounts.yaml" ];
+if [ "$INPUT_FILE" = "service-accounts.yaml" ] || [ "$INPUT_FILE" = "" ];
 then
     OPENAPI_FILENAME=".openapi/service-accounts.yaml"
     PACKAGE_NAME="serviceaccountsclient"
@@ -134,7 +136,7 @@ then
 fi
 
 
-if [ "$INPUT_FILE" = "smartevents_mgmt_v2.yaml" ];
+if [ "$INPUT_FILE" = "smartevents_mgmt_v2.yaml" ] || [ "$INPUT_FILE" = "" ];
 then
     OPENAPI_FILENAME=".openapi/smartevents_mgmt_v2.yaml"
     PACKAGE_NAME="smarteventsmgmtclient"
