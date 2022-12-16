@@ -19,3 +19,5 @@ jobs:
         run: |
           bash scripts/generate-go.sh ${{ inputs.download_url }}
           bash scripts/generate-js.sh ${{ inputs.download_url }}
+          bash scripts/generate-js.sh ${{ inputs.download_url }}
+          bash scripts/generate-py.sh ${{ inputs.download_url }}
