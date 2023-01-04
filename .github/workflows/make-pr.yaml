@@ -1,0 +1,21 @@
+name: Make pull request 
+on:
+  workflow_call:
+jobs:
+  make_pull_request:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: peter-evans/create-pull-request@v4
+        name: Make pull request
+        with:
+          title: "chore(all): re-generate SDKs"
+          commit-message: "chore(all): re-generate OpenAPI client(s)"
+          author: "app-services-ci <app-services-ci@users.noreply.github.com>"
+          branch: chore/generate-sdks
+          branch-suffix: timestamp
+          reviewers: '@redhat-developer/app-services-sdk-maintainers'
+          delete-branch: true
+          body: |
+            _This pull request was auto-generated_
+            This PR adds the latest generated SDK changes.
