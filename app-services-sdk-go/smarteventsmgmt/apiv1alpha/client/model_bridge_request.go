@@ -17,10 +17,12 @@ import (
 
 // BridgeRequest struct for BridgeRequest
 type BridgeRequest struct {
+	// The name of the bridge
 	Name string `json:"name"`
+	// The cloud provider where the bridge resides
 	CloudProvider string `json:"cloud_provider"`
+	// The cloud provider region where the bridge resides
 	Region string `json:"region"`
-	ErrorHandler *Action `json:"error_handler,omitempty"`
 }
 
 // NewBridgeRequest instantiates a new BridgeRequest object
@@ -115,38 +117,6 @@ func (o *BridgeRequest) SetRegion(v string) {
 	o.Region = v
 }
 
-// GetErrorHandler returns the ErrorHandler field value if set, zero value otherwise.
-func (o *BridgeRequest) GetErrorHandler() Action {
-	if o == nil || o.ErrorHandler == nil {
-		var ret Action
-		return ret
-	}
-	return *o.ErrorHandler
-}
-
-// GetErrorHandlerOk returns a tuple with the ErrorHandler field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *BridgeRequest) GetErrorHandlerOk() (*Action, bool) {
-	if o == nil || o.ErrorHandler == nil {
-		return nil, false
-	}
-	return o.ErrorHandler, true
-}
-
-// HasErrorHandler returns a boolean if a field has been set.
-func (o *BridgeRequest) HasErrorHandler() bool {
-	if o != nil && o.ErrorHandler != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetErrorHandler gets a reference to the given Action and assigns it to the ErrorHandler field.
-func (o *BridgeRequest) SetErrorHandler(v Action) {
-	o.ErrorHandler = &v
-}
-
 func (o BridgeRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
@@ -157,9 +127,6 @@ func (o BridgeRequest) MarshalJSON() ([]byte, error) {
 	}
 	if true {
 		toSerialize["region"] = o.Region
-	}
-	if o.ErrorHandler != nil {
-		toSerialize["error_handler"] = o.ErrorHandler
 	}
 	return json.Marshal(toSerialize)
 }

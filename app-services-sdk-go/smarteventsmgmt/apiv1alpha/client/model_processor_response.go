@@ -18,16 +18,23 @@ import (
 
 // ProcessorResponse struct for ProcessorResponse
 type ProcessorResponse struct {
+	// The kind (type) of this resource
 	Kind string `json:"kind"`
+	// The unique identifier of this resource
 	Id string `json:"id"`
+	// The URL of this resource, without the protocol
 	Href string `json:"href"`
 	SubmittedAt time.Time `json:"submitted_at"`
 	PublishedAt *time.Time `json:"published_at,omitempty"`
 	ModifiedAt *time.Time `json:"modified_at,omitempty"`
 	Status ManagedResourceStatus `json:"status"`
+	// The user that owns this resource
 	Owner string `json:"owner"`
+	// The name of the processor
 	Name string `json:"name"`
+	// The Camel YAML DSL code, formatted as JSON, that defines the flows in the processor
 	Flows map[string]interface{} `json:"flows"`
+	StatusMessage *string `json:"status_message,omitempty"`
 }
 
 // NewProcessorResponse instantiates a new ProcessorResponse object
@@ -311,6 +318,38 @@ func (o *ProcessorResponse) SetFlows(v map[string]interface{}) {
 	o.Flows = v
 }
 
+// GetStatusMessage returns the StatusMessage field value if set, zero value otherwise.
+func (o *ProcessorResponse) GetStatusMessage() string {
+	if o == nil || o.StatusMessage == nil {
+		var ret string
+		return ret
+	}
+	return *o.StatusMessage
+}
+
+// GetStatusMessageOk returns a tuple with the StatusMessage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProcessorResponse) GetStatusMessageOk() (*string, bool) {
+	if o == nil || o.StatusMessage == nil {
+		return nil, false
+	}
+	return o.StatusMessage, true
+}
+
+// HasStatusMessage returns a boolean if a field has been set.
+func (o *ProcessorResponse) HasStatusMessage() bool {
+	if o != nil && o.StatusMessage != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetStatusMessage gets a reference to the given string and assigns it to the StatusMessage field.
+func (o *ProcessorResponse) SetStatusMessage(v string) {
+	o.StatusMessage = &v
+}
+
 func (o ProcessorResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
@@ -342,6 +381,9 @@ func (o ProcessorResponse) MarshalJSON() ([]byte, error) {
 	}
 	if true {
 		toSerialize["flows"] = o.Flows
+	}
+	if o.StatusMessage != nil {
+		toSerialize["status_message"] = o.StatusMessage
 	}
 	return json.Marshal(toSerialize)
 }
