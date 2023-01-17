@@ -1,4 +1,4 @@
-module github.com/GIT_USER_ID/GIT_REPO_ID
+module github.com/jackdelahunt/app-services-sdk-core/app-services-sdk-go/registryinstance/apiv1/client
 
 go 1.13
 
