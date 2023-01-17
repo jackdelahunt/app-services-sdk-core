@@ -99,7 +99,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-              example: null
           description: Deleted
         "400":
           content:
@@ -1248,7 +1247,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnterpriseClusterRegistrationResponse'
+                $ref: '#/components/schemas/EnterpriseClusterWithAddonParameters'
           description: Enterprise cluster registered
         "400":
           content:
@@ -1387,6 +1386,133 @@ paths:
       - Bearer: []
       tags:
       - enterprise-dataplane-clusters
+    get:
+      description: Returns enterprise data plane cluster by ID
+      operationId: getEnterpriseClusterById
+      parameters:
+      - description: ID of the enterprise data plane cluster
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                EnterpriseClusterExample:
+                  $ref: '#/components/examples/EnterpriseClusterExample'
+              schema:
+                $ref: '#/components/schemas/EnterpriseCluster'
+          description: Found enterprise data plane cluster with provided ID
+        "401":
+          content:
+            application/json:
+              examples:
+                "401Example":
+                  $ref: '#/components/examples/401Example'
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Auth token is invalid
+        "403":
+          content:
+            application/json:
+              examples:
+                "403Example":
+                  $ref: '#/components/examples/403Example'
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: User not authorized to access the service
+        "404":
+          content:
+            application/json:
+              examples:
+                "404Example":
+                  $ref: '#/components/examples/404Example'
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: No Enterprise data plane cluster with specified ID exists
+        "500":
+          content:
+            application/json:
+              examples:
+                "500Example":
+                  $ref: '#/components/examples/500Example'
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error occurred
+      security:
+      - Bearer: []
+      tags:
+      - enterprise-dataplane-clusters
+  /api/kafkas_mgmt/v1/clusters/{id}/addon_parameters:
+    get:
+      description: Returns enterprise data plane cluster by ID along with its addon
+        parameters
+      operationId: getEnterpriseClusterWithAddonParameters
+      parameters:
+      - description: ID of the enterprise data plane cluster
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                EnterpriseClusterWithAddonsExample:
+                  $ref: '#/components/examples/EnterpriseClusterWithAddonParametersExample'
+              schema:
+                $ref: '#/components/schemas/EnterpriseClusterWithAddonParameters'
+          description: Returns the enterprise data plane cluster with addon parameters
+            for an existing enterprise data plane cluster with provided ID
+        "401":
+          content:
+            application/json:
+              examples:
+                "401Example":
+                  $ref: '#/components/examples/401Example'
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Auth token is invalid
+        "403":
+          content:
+            application/json:
+              examples:
+                "403Example":
+                  $ref: '#/components/examples/403Example'
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: User not authorized to access the service
+        "404":
+          content:
+            application/json:
+              examples:
+                "404Example":
+                  $ref: '#/components/examples/404Example'
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: No Enterprise data plane cluster with specified ID exists
+        "500":
+          content:
+            application/json:
+              examples:
+                "500Example":
+                  $ref: '#/components/examples/500Example'
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error occurred
+      security:
+      - Bearer: []
+      tags:
+      - enterprise-dataplane-clusters
 components:
   examples:
     USRegionExample:
@@ -1412,7 +1538,27 @@ components:
         href: /api/kafkas_mgmr/v1/clusters/abcd1234ascd3456fdks9485lskd030h
         status: ready
         cluster_id: abcd1234ascd3456fdks9485lskd030h
+    EnterpriseClusterWithAddonParametersExample:
+      value:
+        id: abcd1234ascd3456fdks9485lskd030h
+        kind: cluster
+        href: /api/kafkas_mgmr/v1/clusters/abcd1234ascd3456fdks9485lskd030h
+        status: ready
+        cluster_id: abcd1234ascd3456fdks9485lskd030h
         access_kafkas_via_private_network: true
+        fleetshard_parameters:
+        - id: sso-auth-server-url
+          value: http://someurl/auth/realms/rhoas
+        - id: sso-client-id
+          value: kas-fleetshard-agent-1234abcd1234abcd1234abcd1234abcd
+        - id: sso-secret
+          value: some-secret
+        - id: cluster-id
+          value: 1234abcd1234abcd1234abcd1234abcd
+        - id: poll-interval
+          value: 15s
+        - id: resync-interval
+          value: 60s
     KafkaRequestExample:
       value:
         id: 1iSY6RQ3JKI8Q0OTmjQFd3ocFRg
@@ -1425,7 +1571,7 @@ components:
         owner: api_kafka_service
         name: serviceapi
         bootstrap_server_host: serviceapi-1isy6rq3jki8q0otmjqfd3ocfrg.apps.mk-bttg0jn170hp.x5u8.s1.devshift.org
-        admin_api_server_url: "https://admin-server-mk-e-e-e-e-c---{}ld{-}-n-vp--bltg.rhcloud.com"
+        admin_api_server_url: https://admin-server-mk-e-e-e-e-c---{}ld{-}-n-vp--bltg.rhcloud.com
         created_at: 2020-10-05T12:51:24.053142Z
         updated_at: 2020-10-05T12:56:36.362208Z
         version: 2.6.0
@@ -1456,7 +1602,7 @@ components:
         owner: api_kafka_service
         name: serviceapi
         bootstrap_server_host: serviceapi-1isy6rq3jki8q0otmjqfd3ocfrg.apps.mk-bttg0jn170hp.x5u8.s1.devshift.org
-        admin_api_server_url: "https://admin-server-mk-e-e-e-e-c---{}ld{-}-n-vp--bltg.rhcloud.com"
+        admin_api_server_url: https://admin-server-mk-e-e-e-e-c---{}ld{-}-n-vp--bltg.rhcloud.com
         created_at: 2020-10-05T12:51:24.053142Z
         updated_at: 2020-10-05T12:56:36.362208Z
         failed_reason: a reason the Kafka request creation failed
@@ -1507,7 +1653,7 @@ components:
       value:
         kind: CloudRegion
         id: us-east-1
-        display_name: "US East, N. Virginia"
+        display_name: US East, N. Virginia
         enabled: true
         capacity:
         - instance_type: standard
@@ -1586,7 +1732,7 @@ components:
         kind: Error
         href: /api/kafkas_mgmt/v1/errors/103
         code: KAFKAS-MGMT-103
-        reason: "Synchronous action is not supported, use async=true parameter"
+        reason: Synchronous action is not supported, use async=true parameter
         operation_id: 1iWIimqGcrDuL61aUxIZqBTqNRa
     "400CreationExample":
       value:
@@ -1594,7 +1740,7 @@ components:
         kind: Error
         href: /api/kafkas_mgmt/v1/errors/103
         code: KAFKAS-MGMT-103
-        reason: "Synchronous action is not supported, use async=true parameter"
+        reason: Synchronous action is not supported, use async=true parameter
         operation_id: 1iWIimqGcrDuL61aUxIZqBTqNRa
     "400InvalidQueryExample":
       value:
@@ -1602,10 +1748,10 @@ components:
         kind: Error
         href: /api/kafkas_mgmt/v1/errors/23
         code: KAFKAS-MGMT-23
-        reason: "Failed to parse search query: Unable to list Kafka requests for api_kafka_service:\
-          \ KAFKAS-MGMT-23: Failed to parse search query: Unsupported column name\
-          \ for search: 'id'. Supported column names are: region, name, cloud_provider,\
-          \ name, status. Query invalid: id = 123"
+        reason: 'Failed to parse search query: Unable to list Kafka requests for api_kafka_service:
+          KAFKAS-MGMT-23: Failed to parse search query: Unsupported column name for
+          search: ''id''. Supported column names are: region, name, cloud_provider,
+          name, status. Query invalid: id = 123'
         operation_id: 1lWDGuybIrEnxrAem724gqkkiDv
     "400UnsupportedProviderExample":
       value:
@@ -1629,7 +1775,7 @@ components:
         kind: Error
         href: /api/kafkas_mgmt/v1/errors/21
         code: KAFKAS-MGMT-21
-        reason: "missing path parameter: kafka id"
+        reason: 'missing path parameter: kafka id'
         operation_id: 1lWDGuybIrEnxrAem724gqkkiDv
     "400InvalidClusterIdExample":
       value:
@@ -1668,7 +1814,7 @@ components:
         kind: Error
         href: /api/kafkas_mgmt/v1/errors/11
         code: KAFKAS-MGMT-11
-        reason: "Unable to verify JWT token: Required authorization token not found"
+        reason: 'Unable to verify JWT token: Required authorization token not found'
         operation_id: 1iY3UhEhwmXBpWPfI2lNekpd4ZD
     "403Example":
       value:
@@ -1725,10 +1871,10 @@ components:
         kind: Error
         href: /api/kafkas_mgmt/v1/errors/9
         code: KAFKAS-MGMT-9
-        reason: "error deleting syncset: OCM-EX-9: failed to delete syncset: ext-serviceapi-1ix03lndlmq0qfc7sita5sljv8e\
-          \ for cluster id: 1g5d88q0lrcdv4g7alb7slfgnj3dhbsj%!(EXTRA *errors.Error=identifier\
-          \ is '404', code is 'CLUSTERS-MGMT-404' and operation identifier is '1g5or50viu07oealuehrkc26dgftj1ac':\
-          \ Cluster '1g5d88q0lrcdv4g7alb7slfgnj3dhbsj' not found)"
+        reason: 'error deleting syncset: OCM-EX-9: failed to delete syncset: ext-serviceapi-1ix03lndlmq0qfc7sita5sljv8e
+          for cluster id: 1g5d88q0lrcdv4g7alb7slfgnj3dhbsj%!(EXTRA *errors.Error=identifier
+          is ''404'', code is ''CLUSTERS-MGMT-404'' and operation identifier is ''1g5or50viu07oealuehrkc26dgftj1ac'':
+          Cluster ''1g5d88q0lrcdv4g7alb7slfgnj3dhbsj'' not found)'
         operation_id: 1iYTsWry6nsqb2sNmFj5bXpD7Ca
     EnterpriseOsdClusterPayloadExample:
       value:
@@ -2018,18 +2164,17 @@ components:
             in
           type: string
         name:
-          description: "The name of the Kafka cluster. It must consist of lower-case\
-            \ alphanumeric characters or '-', start with an alphabetic character,\
-            \ and end with an alphanumeric character, and can not be longer than 32\
-            \ characters."
+          description: The name of the Kafka cluster. It must consist of lower-case
+            alphanumeric characters or '-', start with an alphabetic character, and
+            end with an alphanumeric character, and can not be longer than 32 characters.
           type: string
         region:
           description: The region where the Kafka cluster will be created in
           type: string
         reauthentication_enabled:
-          description: "Whether connection reauthentication is enabled or not. If\
-            \ set to true, connection reauthentication on the Kafka instance will\
-            \ be required every 5 minutes. The default value is true"
+          description: Whether connection reauthentication is enabled or not. If set
+            to true, connection reauthentication on the Kafka instance will be required
+            every 5 minutes. The default value is true
           nullable: true
           type: boolean
         plan:
@@ -2073,7 +2218,8 @@ components:
           description: A list of Kafka instance sizes available for this instance
             type
           items:
-            $ref: '#/components/schemas/SupportedKafkaInstanceType_sizes_inner'
+            allOf:
+            - $ref: '#/components/schemas/SupportedKafkaSize'
           type: array
       required:
       - supported_billing_models
@@ -2086,17 +2232,17 @@ components:
           minLength: 1
           type: string
         ams_resource:
-          description: "AMS resource to be used. Accepted values: ['rhosak']"
+          description: 'AMS resource to be used. Accepted values: [''rhosak'']'
           minLength: 1
           type: string
         ams_product:
-          description: "AMS product to be used. Accepted values: ['RHOSAK', 'RHOSAKTrial',\
-            \ 'RHOSAKEval']"
+          description: 'AMS product to be used. Accepted values: [''RHOSAK'', ''RHOSAKTrial'',
+            ''RHOSAKEval'']'
           minLength: 1
           type: string
         ams_billing_models:
-          description: "List of AMS available billing models: Accepted values: ['marketplace',\
-            \ 'marketplace-rhm', 'marketplace-aws']"
+          description: 'List of AMS available billing models: Accepted values: [''marketplace'',
+            ''marketplace-rhm'', ''marketplace-aws'']'
           items:
             minLength: 1
             type: string
@@ -2148,8 +2294,8 @@ components:
           description: Replication factor available to this Kafka instance size.
           type: integer
         supported_az_modes:
-          description: "List of Availability Zone modes that this Kafka instance size\
-            \ supports. The possible values are \"single\", \"multi\"."
+          description: List of Availability Zone modes that this Kafka instance size
+            supports. The possible values are "single", "multi".
           items:
             type: string
           type: array
@@ -2163,8 +2309,8 @@ components:
           type: integer
         quota_type:
           deprecated: true
-          description: "Quota type used by this Kafka instance size. This is now deprecated,\
-            \ please refer to supported_billing_models at instance-type level instead."
+          description: Quota type used by this Kafka instance size. This is now deprecated,
+            please refer to supported_billing_models at instance-type level instead.
           type: string
         capacity_consumed:
           description: Data plane cluster capacity consumed by this Kafka instance
@@ -2202,8 +2348,8 @@ components:
           description: Name of the cloud provider for display purposes.
           type: string
         name:
-          description: "Human friendly identifier of the cloud provider, for example\
-            \ `aws`."
+          description: Human friendly identifier of the cloud provider, for example
+            `aws`.
           type: string
         enabled:
           description: Whether the cloud provider is enabled for deploying an OSD
@@ -2221,7 +2367,7 @@ components:
           description: Unique identifier of the object.
           type: string
         display_name:
-          description: "Name of the region for display purposes, for example `N. Virginia`."
+          description: Name of the region for display purposes, for example `N. Virginia`.
           type: string
         enabled:
           default: false
@@ -2274,7 +2420,6 @@ components:
       allOf:
       - $ref: '#/components/schemas/ObjectReference'
       - $ref: '#/components/schemas/ServiceAccountListItem_allOf'
-      description: ""
     ServiceAccountList:
       allOf:
       - $ref: '#/components/schemas/ServiceAccountList_allOf'
@@ -2335,9 +2480,9 @@ components:
           nullable: true
           type: string
         reauthentication_enabled:
-          description: "Whether connection reauthentication is enabled or not. If\
-            \ set to true, connection reauthentication on the Kafka instance will\
-            \ be required every 5 minutes."
+          description: Whether connection reauthentication is enabled or not. If set
+            to true, connection reauthentication on the Kafka instance will be required
+            every 5 minutes.
           nullable: true
           type: boolean
       type: object
@@ -2382,11 +2527,11 @@ components:
       - cluster_ingress_dns_name
       - kafka_machine_pool_node_count
       type: object
-    EnterpriseClusterRegistrationResponse:
+    EnterpriseClusterWithAddonParameters:
       allOf:
       - $ref: '#/components/schemas/ObjectReference'
-      - $ref: '#/components/schemas/EnterpriseClusterRegistrationResponse_allOf'
-      description: Enterprise cluster registration endpoint response
+      - $ref: '#/components/schemas/EnterpriseClusterWithAddonParameters_allOf'
+      description: Enterprise cluster with addon parameters
     FleetshardParameter:
       description: Fleetshard parameter consumed by enterprise cluster
       properties:
@@ -2402,13 +2547,13 @@ components:
             $ref: '#/components/schemas/Error'
           type: array
       type: object
-      example: null
     KafkaRequest_allOf:
-      example: "{\"$ref\":\"#/components/examples/KafkaRequestExample\"}"
+      example:
+        $ref: '#/components/examples/KafkaRequestExample'
       properties:
         status:
-          description: "Values: [accepted, preparing, provisioning, ready, failed,\
-            \ deprovision, deleting, suspending, suspended, resuming] "
+          description: 'Values: [accepted, preparing, provisioning, ready, failed,
+            deprovision, deleting, suspending, suspended, resuming] '
           type: string
         cloud_provider:
           description: Name of Cloud used to deploy. For example AWS
@@ -2416,8 +2561,8 @@ components:
         multi_az:
           type: boolean
         region:
-          description: "Values will be regions of specific cloud provider. For example:\
-            \ us-east-1 for AWS"
+          description: 'Values will be regions of specific cloud provider. For example:
+            us-east-1 for AWS'
           type: string
         owner:
           type: string
@@ -2448,15 +2593,15 @@ components:
           type: string
         instance_type_name:
           deprecated: true
-          description: "This field is now deprecated, please use the /api/kafkas_mgmt/v1/instance_types/{cloud_provider}/{cloud_region}\
-            \ endpoint to retrieve the field instead."
+          description: This field is now deprecated, please use the /api/kafkas_mgmt/v1/instance_types/{cloud_provider}/{cloud_region}
+            endpoint to retrieve the field instead.
           type: string
         reauthentication_enabled:
           type: boolean
         kafka_storage_size:
           deprecated: true
-          description: "Maximum data storage available to this Kafka. This is now\
-            \ deprecated, please use max_data_retention_size instead."
+          description: Maximum data storage available to this Kafka. This is now deprecated,
+            please use max_data_retention_size instead.
           type: string
         max_data_retention_size:
           $ref: '#/components/schemas/SupportedKafkaSizeBytesValueItem'
@@ -2466,33 +2611,33 @@ components:
           type: string
         ingress_throughput_per_sec:
           deprecated: true
-          description: "This field is now deprecated, please use the /api/kafkas_mgmt/v1/instance_types/{cloud_provider}/{cloud_region}\
-            \ endpoint to retrieve the field instead."
+          description: This field is now deprecated, please use the /api/kafkas_mgmt/v1/instance_types/{cloud_provider}/{cloud_region}
+            endpoint to retrieve the field instead.
           type: string
         egress_throughput_per_sec:
           deprecated: true
-          description: "This field is now deprecated, please use the /api/kafkas_mgmt/v1/instance_types/{cloud_provider}/{cloud_region}\
-            \ endpoint to retrieve the field instead."
+          description: This field is now deprecated, please use the /api/kafkas_mgmt/v1/instance_types/{cloud_provider}/{cloud_region}
+            endpoint to retrieve the field instead.
           type: string
         total_max_connections:
           deprecated: true
-          description: "This field is now deprecated, please use the /api/kafkas_mgmt/v1/instance_types/{cloud_provider}/{cloud_region}\
-            \ endpoint to retrieve the field instead."
+          description: This field is now deprecated, please use the /api/kafkas_mgmt/v1/instance_types/{cloud_provider}/{cloud_region}
+            endpoint to retrieve the field instead.
           type: integer
         max_partitions:
           deprecated: true
-          description: "This field is now deprecated, please use the /api/kafkas_mgmt/v1/instance_types/{cloud_provider}/{cloud_region}\
-            \ endpoint to retrieve the field instead."
+          description: This field is now deprecated, please use the /api/kafkas_mgmt/v1/instance_types/{cloud_provider}/{cloud_region}
+            endpoint to retrieve the field instead.
           type: integer
         max_data_retention_period:
           deprecated: true
-          description: "This field is now deprecated, please use the /api/kafkas_mgmt/v1/instance_types/{cloud_provider}/{cloud_region}\
-            \ endpoint to retrieve the field instead."
+          description: This field is now deprecated, please use the /api/kafkas_mgmt/v1/instance_types/{cloud_provider}/{cloud_region}
+            endpoint to retrieve the field instead.
           type: string
         max_connection_attempts_per_sec:
           deprecated: true
-          description: "This field is now deprecated, please use the /api/kafkas_mgmt/v1/instance_types/{cloud_provider}/{cloud_region}\
-            \ endpoint to retrieve the field instead."
+          description: This field is now deprecated, please use the /api/kafkas_mgmt/v1/instance_types/{cloud_provider}/{cloud_region}
+            endpoint to retrieve the field instead.
           type: integer
         billing_cloud_account_id:
           type: string
@@ -2505,8 +2650,13 @@ components:
       - reauthentication_enabled
       type: object
     KafkaRequestList_allOf:
-      example: "{\"kind\":\"KafkaRequestList\",\"page\":\"1\",\"size\":\"1\",\"total\"\
-        :\"1\",\"item\":{\"$ref\":\"#/components/examples/KafkaRequestExample\"}}"
+      example:
+        kind: KafkaRequestList
+        page: "1"
+        size: "1"
+        total: "1"
+        item:
+          $ref: '#/components/examples/KafkaRequestExample'
       properties:
         items:
           items:
@@ -2515,9 +2665,13 @@ components:
           type: array
       type: object
     EnterpriseClusterList_allOf:
-      example: "{\"kind\":\"ClusterList\",\"page\":\"1\",\"size\":\"1\",\"total\"\
-        :\"1\",\"item\":{\"$ref\":\"#/components/examples/EnterpriseClusterExample\"\
-        }}"
+      example:
+        kind: ClusterList
+        page: "1"
+        size: "1"
+        total: "1"
+        item:
+          $ref: '#/components/examples/EnterpriseClusterExample'
       properties:
         items:
           items:
@@ -2540,12 +2694,16 @@ components:
       required:
       - access_kafkas_via_private_network
       type: object
-      example: null
     VersionMetadata_allOf:
-      example: "{\"kind\":\"APIVersion\",\"id\":\"v1\",\"href\":\"/api/kafkas_mgmt/v1\"\
-        ,\"server_version\":\"24a263e8631d713b3104c1a70c143644ab91de6f\",\"collections\"\
-        :[{\"id\":\"kafkas\",\"href\":\"/api/kafkas_mgmt/v1/kafkas\",\"kind\":\"KafkaList\"\
-        }]}"
+      example:
+        kind: APIVersion
+        id: v1
+        href: /api/kafkas_mgmt/v1
+        server_version: 24a263e8631d713b3104c1a70c143644ab91de6f
+        collections:
+        - id: kafkas
+          href: /api/kafkas_mgmt/v1/kafkas
+          kind: KafkaList
       properties:
         server_version:
           type: string
@@ -2556,8 +2714,9 @@ components:
           type: array
       type: object
     SupportedKafkaInstanceTypesList_allOf:
-      example: "{\"instance_types\":{\"$ref\":\"#/components/examples/SupportedKafkaInstanceTypeListExample\"\
-        }}"
+      example:
+        instance_types:
+          $ref: '#/components/examples/SupportedKafkaInstanceTypeListExample'
       properties:
         instance_types:
           items:
@@ -2565,12 +2724,14 @@ components:
             - $ref: '#/components/schemas/SupportedKafkaInstanceType'
           type: array
       type: object
-    SupportedKafkaInstanceType_sizes_inner:
-      allOf:
-      - $ref: '#/components/schemas/SupportedKafkaSize'
     CloudProviderList_allOf:
-      example: "{\"kind\":\"CloudProviderList\",\"page\":\"1\",\"size\":\"1\",\"total\"\
-        :\"1\",\"item\":{\"$ref\":\"#/components/examples/CloudProviderExample\"}}"
+      example:
+        kind: CloudProviderList
+        page: "1"
+        size: "1"
+        total: "1"
+        item:
+          $ref: '#/components/examples/CloudProviderExample'
       properties:
         items:
           items:
@@ -2579,8 +2740,13 @@ components:
           type: array
       type: object
     CloudRegionList_allOf:
-      example: "{\"kind\":\"CloudRegionList\",\"page\":\"1\",\"size\":\"1\",\"total\"\
-        :\"1\",\"item\":{\"$ref\":\"#/components/examples/CloudRegionExample\"}}"
+      example:
+        kind: CloudRegionList
+        page: "1"
+        size: "1"
+        total: "1"
+        item:
+          $ref: '#/components/examples/CloudRegionExample'
       properties:
         items:
           items:
@@ -2589,16 +2755,15 @@ components:
           type: array
       type: object
     ServiceAccount_allOf:
-      example: "{\"$ref\":\"#/components/examples/ServiceAccountExample\"}"
+      example:
+        $ref: '#/components/examples/ServiceAccountExample'
       properties:
         id:
           description: server generated unique id of the service account
           type: string
         name:
-          description: ""
           type: string
         description:
-          description: ""
           type: string
         client_id:
           type: string
@@ -2639,10 +2804,11 @@ components:
           description: description of the service account
           type: string
       type: object
-      example: null
     ServiceAccountList_allOf:
-      example: "{\"kind\":\"ServiceAccountList\",\"items\":[{\"$ref\":\"#/components/examples/ServiceAccountListItemExample\"\
-        }]}"
+      example:
+        kind: ServiceAccountList
+        items:
+        - $ref: '#/components/examples/ServiceAccountListItemExample'
       properties:
         kind:
           type: string
@@ -2656,7 +2822,8 @@ components:
       - kind
       type: object
     SsoProvider_allOf:
-      example: "{\"$ref\":\"#/components/examples/SsoProviderExample\"}"
+      example:
+        $ref: '#/components/examples/SsoProviderExample'
       properties:
         name:
           description: name of the sso provider
@@ -2672,8 +2839,11 @@ components:
           type: string
       type: object
     MetricsRangeQueryList_allOf:
-      example: "{\"kind\":\"MetricsRangeQueryList\",\"id\":\"1nbpS70HduPe4l0to8jSg2CLzfu\"\
-        ,\"items\":{\"$ref\":\"#/components/examples/MetricsRangeQueryExample\"}}"
+      example:
+        kind: MetricsRangeQueryList
+        id: 1nbpS70HduPe4l0to8jSg2CLzfu
+        items:
+          $ref: '#/components/examples/MetricsRangeQueryExample'
       properties:
         kind:
           type: string
@@ -2686,9 +2856,11 @@ components:
           type: array
       type: object
     MetricsInstantQueryList_allOf:
-      example: "{\"kind\":\"MetricsInstantQueryList\",\"id\":\"1nbpS70HduPe4l0to8jSg2CLzfu\"\
-        ,\"items\":{\"$ref\":\"#/components/examples/MetricsInstantQueryExample\"\
-        }}"
+      example:
+        kind: MetricsInstantQueryList
+        id: 1nbpS70HduPe4l0to8jSg2CLzfu
+        items:
+          $ref: '#/components/examples/MetricsInstantQueryExample'
       properties:
         kind:
           type: string
@@ -2700,7 +2872,7 @@ components:
             - $ref: '#/components/schemas/InstantQuery'
           type: array
       type: object
-    EnterpriseClusterRegistrationResponse_allOf:
+    EnterpriseClusterWithAddonParameters_allOf:
       properties:
         access_kafkas_via_private_network:
           description: Indicates whether Kafkas created on this data plane cluster
@@ -2720,7 +2892,6 @@ components:
       required:
       - access_kafkas_via_private_network
       type: object
-      example: null
   securitySchemes:
     Bearer:
       bearerFormat: JWT
