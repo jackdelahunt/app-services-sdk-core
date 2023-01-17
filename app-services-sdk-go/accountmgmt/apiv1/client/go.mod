@@ -1,7 +1,7 @@
-module github.com/jackdelahunt/app-services-sdk-core/app-services-sdk-go/accountmgmt/apiv1/client
+module github.com/jackdelahunt/app-services-sdk-core/app-services-sdk-go/accountgmt/apiv1/client
 
 go 1.13
 
 require (
-	golang.org/x/oauth2 v0.0.0-20210323180902-22b0adad7558
+	golang.org/x/oauth2 v0.0.0-20210218202405-ba52d332ba99
 )
