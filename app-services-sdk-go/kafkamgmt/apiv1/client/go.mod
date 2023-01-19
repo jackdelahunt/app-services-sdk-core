@@ -1,4 +1,4 @@
-module github.com/jackdelahunt/app-services-sdk-core/app-services-sdk-go/kafkamgmt/apiv1/client
+module github.com/GIT_USER_ID/GIT_REPO_ID
 
 go 1.13
 

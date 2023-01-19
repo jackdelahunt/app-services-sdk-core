@@ -13,11 +13,11 @@ import sys
 import unittest
 
 import rhoas_kafka_mgmt_sdk
-from rhoas_kafka_mgmt_sdk.model.enterprise_cluster_registration_response_all_of import EnterpriseClusterRegistrationResponseAllOf
+from rhoas_kafka_mgmt_sdk.model.enterprise_cluster_with_addon_parameters_all_of import EnterpriseClusterWithAddonParametersAllOf
 
 
-class TestEnterpriseClusterRegistrationResponseAllOf(unittest.TestCase):
-    """EnterpriseClusterRegistrationResponseAllOf unit test stubs"""
+class TestEnterpriseClusterWithAddonParametersAllOf(unittest.TestCase):
+    """EnterpriseClusterWithAddonParametersAllOf unit test stubs"""
 
     def setUp(self):
         pass
@@ -25,10 +25,10 @@ class TestEnterpriseClusterRegistrationResponseAllOf(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testEnterpriseClusterRegistrationResponseAllOf(self):
-        """Test EnterpriseClusterRegistrationResponseAllOf"""
+    def testEnterpriseClusterWithAddonParametersAllOf(self):
+        """Test EnterpriseClusterWithAddonParametersAllOf"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = EnterpriseClusterRegistrationResponseAllOf()  # noqa: E501
+        # model = EnterpriseClusterWithAddonParametersAllOf()  # noqa: E501
         pass
 
 
