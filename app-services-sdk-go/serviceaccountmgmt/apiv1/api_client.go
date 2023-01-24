@@ -1,9 +1,9 @@
 package apiv1
 
 import (
-	"github.com/jackdelahunt/app-sercvices-sdk-core/app-services-sdk-go/core"
+	"github.com/jackdelahunt/app-services-sdk-core/app-services-sdk-go/core"
 
-	apiv1 "github.com/jackdelahunt/app-sercvices-sdk-core/app-services-sdk-go/apiv1/client"
+	apiv1 "github.com/jackdelahunt/app-services-sdk-core/app-services-sdk-go/apiv1/client"
 )
 
 // Config defines the available configuration options
