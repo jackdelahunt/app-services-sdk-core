@@ -3,7 +3,7 @@ package kafkainstance
 import (
 	"github.com/jackdelahunt/app-services-sdk-core/app-services-sdk-go/core"
 
-	apiv1 "github.com/jackdelahunt/app-services-sdk-core/app-services-sdk-go/apiv1/client"
+	apiv1 "github.com/jackdelahunt/app-services-sdk-core/app-services-sdk-go/kafkainstance/apiv1/client"
 )
 
 // APIConfig defines the available configuration options
