@@ -54,8 +54,6 @@ docs/UsersApi.md
 docs/VersionMetaData.md
 docs/VersionSearchResults.md
 docs/VersionsApi.md
-go.mod
-go.sum
 model_artifact_meta_data.go
 model_artifact_owner.go
 model_artifact_reference.go

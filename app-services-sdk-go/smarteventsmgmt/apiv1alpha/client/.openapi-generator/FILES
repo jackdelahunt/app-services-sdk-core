@@ -41,8 +41,6 @@ docs/SinkConnectorsApi.md
 docs/SourceConnectorListResponse.md
 docs/SourceConnectorResponse.md
 docs/SourceConnectorsApi.md
-go.mod
-go.sum
 model_bridge_error.go
 model_bridge_error_instance.go
 model_bridge_error_type.go

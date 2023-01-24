@@ -18,8 +18,6 @@ docs/ServiceAccountData.md
 docs/ServiceAccountRequestData.md
 docs/ServiceAccountsApi.md
 docs/ValidationExceptionData.md
-go.mod
-go.sum
 model_acs_client_request_data.go
 model_acs_client_response_data.go
 model_authentication_factors.go

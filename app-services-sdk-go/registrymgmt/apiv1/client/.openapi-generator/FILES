@@ -20,8 +20,6 @@ docs/RegistryListAllOf.md
 docs/RegistryStatusValue.md
 docs/RootTypeForRegistry.md
 docs/ServiceStatus.md
-go.mod
-go.sum
 model_error.go
 model_error_list.go
 model_error_list_all_of.go

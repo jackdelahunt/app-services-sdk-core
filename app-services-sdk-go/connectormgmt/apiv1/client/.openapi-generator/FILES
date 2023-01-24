@@ -66,8 +66,6 @@ docs/ServiceAccount.md
 docs/ServiceConnectionSettings.md
 docs/VersionMetadata.md
 docs/VersionMetadataAllOf.md
-go.mod
-go.sum
 model_addon_parameter.go
 model_channel.go
 model_connector.go

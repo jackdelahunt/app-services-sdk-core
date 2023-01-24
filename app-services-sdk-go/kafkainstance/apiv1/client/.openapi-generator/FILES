@@ -63,8 +63,6 @@ docs/TopicsApi.md
 docs/TopicsList.md
 docs/TopicsListAllOf.md
 docs/TopicsToResetOffset.md
-go.mod
-go.sum
 model_acl_binding.go
 model_acl_binding_all_of.go
 model_acl_binding_list_page.go
