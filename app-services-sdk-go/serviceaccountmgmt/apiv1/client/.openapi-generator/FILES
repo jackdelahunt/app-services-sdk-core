@@ -30,4 +30,7 @@ model_service_account_data.go
 model_service_account_request_data.go
 model_validation_exception_data.go
 response.go
+test/api_acs_tenants_test.go
+test/api_default_test.go
+test/api_service_accounts_test.go
 utils.go
