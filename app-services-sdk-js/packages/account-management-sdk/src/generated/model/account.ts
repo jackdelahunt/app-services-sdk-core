@@ -13,10 +13,20 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { AccountAllOf } from './account-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { Capability } from './capability';
+// May contain unused imports in some cases
+// @ts-ignore
 import { Label } from './label';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ObjectReference } from './object-reference';
+// May contain unused imports in some cases
+// @ts-ignore
 import { Organization } from './organization';
 
 /**

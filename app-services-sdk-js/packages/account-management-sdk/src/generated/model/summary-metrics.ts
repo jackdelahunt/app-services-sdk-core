@@ -13,7 +13,11 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { SummaryMetricsAllOf } from './summary-metrics-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { SummaryVector } from './summary-vector';
 
 /**

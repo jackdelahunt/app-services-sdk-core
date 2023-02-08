@@ -13,9 +13,17 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { Capability } from './capability';
+// May contain unused imports in some cases
+// @ts-ignore
 import { Label } from './label';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ObjectReference } from './object-reference';
+// May contain unused imports in some cases
+// @ts-ignore
 import { OrganizationAllOf } from './organization-all-of';
 
 /**

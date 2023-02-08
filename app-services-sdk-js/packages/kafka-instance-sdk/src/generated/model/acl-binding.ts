@@ -13,11 +13,23 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { AclBindingAllOf } from './acl-binding-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { AclOperation } from './acl-operation';
+// May contain unused imports in some cases
+// @ts-ignore
 import { AclPatternType } from './acl-pattern-type';
+// May contain unused imports in some cases
+// @ts-ignore
 import { AclPermissionType } from './acl-permission-type';
+// May contain unused imports in some cases
+// @ts-ignore
 import { AclResourceType } from './acl-resource-type';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ObjectReference } from './object-reference';
 
 /**

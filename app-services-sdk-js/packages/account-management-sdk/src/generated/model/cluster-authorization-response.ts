@@ -13,7 +13,11 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ExcessResource } from './excess-resource';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ObjectReference } from './object-reference';
 
 /**

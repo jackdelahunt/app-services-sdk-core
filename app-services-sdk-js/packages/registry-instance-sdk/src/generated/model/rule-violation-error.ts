@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ModelError } from './model-error';
+// May contain unused imports in some cases
+// @ts-ignore
 import { RuleViolationCause } from './rule-violation-cause';
+// May contain unused imports in some cases
+// @ts-ignore
 import { RuleViolationErrorAllOf } from './rule-violation-error-all-of';
 
 /**

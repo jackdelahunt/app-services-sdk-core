@@ -13,7 +13,11 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ServiceAccountListAllOf } from './service-account-list-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ServiceAccountListItem } from './service-account-list-item';
 
 /**

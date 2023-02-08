@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConsumerGroup } from './consumer-group';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConsumerGroupListAllOf } from './consumer-group-list-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ListDeprecated } from './list-deprecated';
 
 /**

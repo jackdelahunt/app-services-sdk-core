@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { Label } from './label';
+// May contain unused imports in some cases
+// @ts-ignore
 import { LabelListAllOf } from './label-list-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { List } from './list';
 
 /**

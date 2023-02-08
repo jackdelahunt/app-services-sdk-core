@@ -13,8 +13,9 @@
  */
 
 
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
-import { Configuration } from '../configuration';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
@@ -122,7 +123,7 @@ export const SearchApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Returns a paginated list of all artifacts with at least one version that matches the posted content. 
          * @summary Search for artifacts by content
-         * @param {any} body The content to search for.
+         * @param {File} body The content to search for.
          * @param {boolean} [canonical] Parameter that can be set to &#x60;true&#x60; to indicate that the server should \&quot;canonicalize\&quot; the content when searching for matching artifacts.  Canonicalization is unique to each artifact type, but typically involves removing any extra whitespace and formatting the content in a consistent manner.  Must be used along with the &#x60;artifactType&#x60; query parameter.
          * @param {ArtifactType} [artifactType] Indicates the type of artifact represented by the content being used for the search.  This is only needed when using the &#x60;canonical&#x60; query parameter, so that the server knows how to canonicalize the content prior to searching for matching artifacts.
          * @param {number} [offset] The number of artifacts to skip before starting to collect the result set.  Defaults to 0.
@@ -132,7 +133,7 @@ export const SearchApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchArtifactsByContent: async (body: any, canonical?: boolean, artifactType?: ArtifactType, offset?: number, limit?: number, order?: 'asc' | 'desc', orderby?: 'name' | 'createdOn', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        searchArtifactsByContent: async (body: File, canonical?: boolean, artifactType?: ArtifactType, offset?: number, limit?: number, order?: 'asc' | 'desc', orderby?: 'name' | 'createdOn', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             assertParamExists('searchArtifactsByContent', 'body', body)
             const localVarPath = `/search/artifacts`;
@@ -219,7 +220,7 @@ export const SearchApiFp = function(configuration?: Configuration) {
         /**
          * Returns a paginated list of all artifacts with at least one version that matches the posted content. 
          * @summary Search for artifacts by content
-         * @param {any} body The content to search for.
+         * @param {File} body The content to search for.
          * @param {boolean} [canonical] Parameter that can be set to &#x60;true&#x60; to indicate that the server should \&quot;canonicalize\&quot; the content when searching for matching artifacts.  Canonicalization is unique to each artifact type, but typically involves removing any extra whitespace and formatting the content in a consistent manner.  Must be used along with the &#x60;artifactType&#x60; query parameter.
          * @param {ArtifactType} [artifactType] Indicates the type of artifact represented by the content being used for the search.  This is only needed when using the &#x60;canonical&#x60; query parameter, so that the server knows how to canonicalize the content prior to searching for matching artifacts.
          * @param {number} [offset] The number of artifacts to skip before starting to collect the result set.  Defaults to 0.
@@ -229,7 +230,7 @@ export const SearchApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async searchArtifactsByContent(body: any, canonical?: boolean, artifactType?: ArtifactType, offset?: number, limit?: number, order?: 'asc' | 'desc', orderby?: 'name' | 'createdOn', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArtifactSearchResults>> {
+        async searchArtifactsByContent(body: File, canonical?: boolean, artifactType?: ArtifactType, offset?: number, limit?: number, order?: 'asc' | 'desc', orderby?: 'name' | 'createdOn', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArtifactSearchResults>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.searchArtifactsByContent(body, canonical, artifactType, offset, limit, order, orderby, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -266,7 +267,7 @@ export const SearchApiFactory = function (configuration?: Configuration, basePat
         /**
          * Returns a paginated list of all artifacts with at least one version that matches the posted content. 
          * @summary Search for artifacts by content
-         * @param {any} body The content to search for.
+         * @param {File} body The content to search for.
          * @param {boolean} [canonical] Parameter that can be set to &#x60;true&#x60; to indicate that the server should \&quot;canonicalize\&quot; the content when searching for matching artifacts.  Canonicalization is unique to each artifact type, but typically involves removing any extra whitespace and formatting the content in a consistent manner.  Must be used along with the &#x60;artifactType&#x60; query parameter.
          * @param {ArtifactType} [artifactType] Indicates the type of artifact represented by the content being used for the search.  This is only needed when using the &#x60;canonical&#x60; query parameter, so that the server knows how to canonicalize the content prior to searching for matching artifacts.
          * @param {number} [offset] The number of artifacts to skip before starting to collect the result set.  Defaults to 0.
@@ -276,7 +277,7 @@ export const SearchApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchArtifactsByContent(body: any, canonical?: boolean, artifactType?: ArtifactType, offset?: number, limit?: number, order?: 'asc' | 'desc', orderby?: 'name' | 'createdOn', options?: any): AxiosPromise<ArtifactSearchResults> {
+        searchArtifactsByContent(body: File, canonical?: boolean, artifactType?: ArtifactType, offset?: number, limit?: number, order?: 'asc' | 'desc', orderby?: 'name' | 'createdOn', options?: any): AxiosPromise<ArtifactSearchResults> {
             return localVarFp.searchArtifactsByContent(body, canonical, artifactType, offset, limit, order, orderby, options).then((request) => request(axios, basePath));
         },
     };
@@ -311,7 +312,7 @@ export interface SearchApiInterface {
     /**
      * Returns a paginated list of all artifacts with at least one version that matches the posted content. 
      * @summary Search for artifacts by content
-     * @param {any} body The content to search for.
+     * @param {File} body The content to search for.
      * @param {boolean} [canonical] Parameter that can be set to &#x60;true&#x60; to indicate that the server should \&quot;canonicalize\&quot; the content when searching for matching artifacts.  Canonicalization is unique to each artifact type, but typically involves removing any extra whitespace and formatting the content in a consistent manner.  Must be used along with the &#x60;artifactType&#x60; query parameter.
      * @param {ArtifactType} [artifactType] Indicates the type of artifact represented by the content being used for the search.  This is only needed when using the &#x60;canonical&#x60; query parameter, so that the server knows how to canonicalize the content prior to searching for matching artifacts.
      * @param {number} [offset] The number of artifacts to skip before starting to collect the result set.  Defaults to 0.
@@ -322,7 +323,7 @@ export interface SearchApiInterface {
      * @throws {RequiredError}
      * @memberof SearchApiInterface
      */
-    searchArtifactsByContent(body: any, canonical?: boolean, artifactType?: ArtifactType, offset?: number, limit?: number, order?: 'asc' | 'desc', orderby?: 'name' | 'createdOn', options?: AxiosRequestConfig): AxiosPromise<ArtifactSearchResults>;
+    searchArtifactsByContent(body: File, canonical?: boolean, artifactType?: ArtifactType, offset?: number, limit?: number, order?: 'asc' | 'desc', orderby?: 'name' | 'createdOn', options?: AxiosRequestConfig): AxiosPromise<ArtifactSearchResults>;
 
 }
 
@@ -358,7 +359,7 @@ export class SearchApi extends BaseAPI implements SearchApiInterface {
     /**
      * Returns a paginated list of all artifacts with at least one version that matches the posted content. 
      * @summary Search for artifacts by content
-     * @param {any} body The content to search for.
+     * @param {File} body The content to search for.
      * @param {boolean} [canonical] Parameter that can be set to &#x60;true&#x60; to indicate that the server should \&quot;canonicalize\&quot; the content when searching for matching artifacts.  Canonicalization is unique to each artifact type, but typically involves removing any extra whitespace and formatting the content in a consistent manner.  Must be used along with the &#x60;artifactType&#x60; query parameter.
      * @param {ArtifactType} [artifactType] Indicates the type of artifact represented by the content being used for the search.  This is only needed when using the &#x60;canonical&#x60; query parameter, so that the server knows how to canonicalize the content prior to searching for matching artifacts.
      * @param {number} [offset] The number of artifacts to skip before starting to collect the result set.  Defaults to 0.
@@ -369,7 +370,7 @@ export class SearchApi extends BaseAPI implements SearchApiInterface {
      * @throws {RequiredError}
      * @memberof SearchApi
      */
-    public searchArtifactsByContent(body: any, canonical?: boolean, artifactType?: ArtifactType, offset?: number, limit?: number, order?: 'asc' | 'desc', orderby?: 'name' | 'createdOn', options?: AxiosRequestConfig) {
+    public searchArtifactsByContent(body: File, canonical?: boolean, artifactType?: ArtifactType, offset?: number, limit?: number, order?: 'asc' | 'desc', orderby?: 'name' | 'createdOn', options?: AxiosRequestConfig) {
         return SearchApiFp(this.configuration).searchArtifactsByContent(body, canonical, artifactType, offset, limit, order, orderby, options).then((request) => request(this.axios, this.basePath));
     }
 }

@@ -13,7 +13,12 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { Node } from './node';
+// May contain unused imports in some cases
+// @ts-ignore
+import { PartitionLeader } from './partition-leader';
 
 /**
  * Kafka topic partition
@@ -41,10 +46,10 @@ export interface Partition {
     'isr'?: Array<Node>;
     /**
      * 
-     * @type {Node}
+     * @type {PartitionLeader}
      * @memberof Partition
      */
-    'leader'?: Node;
+    'leader'?: PartitionLeader;
     /**
      * Unique id for the partition (deprecated, use `partition` instead)
      * @type {number}

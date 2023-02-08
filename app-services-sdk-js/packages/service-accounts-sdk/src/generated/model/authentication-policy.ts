@@ -13,6 +13,8 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { AuthenticationFactors } from './authentication-factors';
 
 /**

@@ -13,8 +13,9 @@
  */
 
 
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
-import { Configuration } from '../configuration';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
@@ -50,7 +51,7 @@ export const ArtifactsApiAxiosParamCreator = function (configuration?: Configura
          * Creates a new artifact by posting the artifact content.  The body of the request should be the raw content of the artifact.  This is typically in JSON format for *most* of the  supported types, but may be in another format for a few (for example, `PROTOBUF`).  The registry attempts to figure out what kind of artifact is being added from the following supported list:  * Avro (`AVRO`) * Protobuf (`PROTOBUF`) * JSON Schema (`JSON`) * Kafka Connect (`KCONNECT`) * OpenAPI (`OPENAPI`) * AsyncAPI (`ASYNCAPI`) * GraphQL (`GRAPHQL`) * Web Services Description Language (`WSDL`) * XML Schema (`XSD`)  Alternatively, you can specify the artifact type using the `X-Registry-ArtifactType`  HTTP request header, or include a hint in the request\'s `Content-Type`.  For example:  ``` Content-Type: application/json; artifactType=AVRO ```  An artifact is created using the content provided in the body of the request.  This content is created under a unique artifact ID that can be provided in the request using the `X-Registry-ArtifactId` request header.  If not provided in the request, the server generates a unique ID for the artifact.  It is typically recommended that callers provide the ID, because this is typically a meaningful identifier,  and for most use cases should be supplied by the caller.  If an artifact with the provided artifact ID already exists, the default behavior is for the server to reject the content with a 409 error.  However, the caller can supply the `ifExists` query parameter to alter this default behavior. The `ifExists` query parameter can have one of the following values:  * `FAIL` (*default*) - server rejects the content with a 409 error * `UPDATE` - server updates the existing artifact and returns the new metadata * `RETURN` - server does not create or add content to the server, but instead  returns the metadata for the existing artifact * `RETURN_OR_UPDATE` - server returns an existing **version** that matches the  provided content if such a version exists, otherwise a new version is created  This operation may fail for one of the following reasons:  * An invalid `ArtifactType` was indicated (HTTP error `400`) * No `ArtifactType` was indicated and the server could not determine one from the content (HTTP error `400`) * Provided content (request body) was empty (HTTP error `400`) * An artifact with the provided ID already exists (HTTP error `409`) * The content violates one of the configured global rules (HTTP error `409`) * A server error occurred (HTTP error `500`) 
          * @summary Create artifact
          * @param {string} groupId Unique ID of an artifact group.
-         * @param {any} body The content of the artifact being created. This is often, but not always, JSON data representing one of the supported artifact types:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;) 
+         * @param {File} body The content of the artifact being created. This is often, but not always, JSON data representing one of the supported artifact types:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;) 
          * @param {ArtifactType} [xRegistryArtifactType] Specifies the type of the artifact being added. Possible values include:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;)
          * @param {string} [xRegistryArtifactId] A client-provided, globally unique identifier for the new artifact.
          * @param {string} [xRegistryVersion] Specifies the version number of this initial version of the artifact content.  This would typically be a simple integer or a SemVer value.  If not provided, the server will assign a version number automatically (starting with version &#x60;1&#x60;).
@@ -65,7 +66,7 @@ export const ArtifactsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createArtifact: async (groupId: string, body: any, xRegistryArtifactType?: ArtifactType, xRegistryArtifactId?: string, xRegistryVersion?: string, ifExists?: IfExists, canonical?: boolean, xRegistryDescription?: string, xRegistryDescriptionEncoded?: string, xRegistryName?: string, xRegistryNameEncoded?: string, xRegistryContentHash?: string, xRegistryHashAlgorithm?: 'SHA256' | 'MD5', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createArtifact: async (groupId: string, body: File, xRegistryArtifactType?: ArtifactType, xRegistryArtifactId?: string, xRegistryVersion?: string, ifExists?: IfExists, canonical?: boolean, xRegistryDescription?: string, xRegistryDescriptionEncoded?: string, xRegistryName?: string, xRegistryNameEncoded?: string, xRegistryContentHash?: string, xRegistryHashAlgorithm?: 'SHA256' | 'MD5', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'groupId' is not null or undefined
             assertParamExists('createArtifact', 'groupId', groupId)
             // verify required parameter 'body' is not null or undefined
@@ -91,39 +92,41 @@ export const ArtifactsApiAxiosParamCreator = function (configuration?: Configura
                 localVarQueryParameter['canonical'] = canonical;
             }
 
-            if (xRegistryArtifactType !== undefined && xRegistryArtifactType !== null) {
-                localVarHeaderParameter['X-Registry-ArtifactType'] = String(JSON.stringify(xRegistryArtifactType));
+            if (xRegistryArtifactType != null) {
+                localVarHeaderParameter['X-Registry-ArtifactType'] = typeof xRegistryArtifactType === 'string' 
+                    ? xRegistryArtifactType 
+                    : JSON.stringify(xRegistryArtifactType);
             }
 
-            if (xRegistryArtifactId !== undefined && xRegistryArtifactId !== null) {
+            if (xRegistryArtifactId != null) {
                 localVarHeaderParameter['X-Registry-ArtifactId'] = String(xRegistryArtifactId);
             }
 
-            if (xRegistryVersion !== undefined && xRegistryVersion !== null) {
+            if (xRegistryVersion != null) {
                 localVarHeaderParameter['X-Registry-Version'] = String(xRegistryVersion);
             }
 
-            if (xRegistryDescription !== undefined && xRegistryDescription !== null) {
+            if (xRegistryDescription != null) {
                 localVarHeaderParameter['X-Registry-Description'] = String(xRegistryDescription);
             }
 
-            if (xRegistryDescriptionEncoded !== undefined && xRegistryDescriptionEncoded !== null) {
+            if (xRegistryDescriptionEncoded != null) {
                 localVarHeaderParameter['X-Registry-Description-Encoded'] = String(xRegistryDescriptionEncoded);
             }
 
-            if (xRegistryName !== undefined && xRegistryName !== null) {
+            if (xRegistryName != null) {
                 localVarHeaderParameter['X-Registry-Name'] = String(xRegistryName);
             }
 
-            if (xRegistryNameEncoded !== undefined && xRegistryNameEncoded !== null) {
+            if (xRegistryNameEncoded != null) {
                 localVarHeaderParameter['X-Registry-Name-Encoded'] = String(xRegistryNameEncoded);
             }
 
-            if (xRegistryContentHash !== undefined && xRegistryContentHash !== null) {
+            if (xRegistryContentHash != null) {
                 localVarHeaderParameter['X-Registry-Content-Hash'] = String(xRegistryContentHash);
             }
 
-            if (xRegistryHashAlgorithm !== undefined && xRegistryHashAlgorithm !== null) {
+            if (xRegistryHashAlgorithm != null) {
                 localVarHeaderParameter['X-Registry-Hash-Algorithm'] = String(xRegistryHashAlgorithm);
             }
 
@@ -554,23 +557,23 @@ export const ArtifactsApiAxiosParamCreator = function (configuration?: Configura
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (xRegistryVersion !== undefined && xRegistryVersion !== null) {
+            if (xRegistryVersion != null) {
                 localVarHeaderParameter['X-Registry-Version'] = String(xRegistryVersion);
             }
 
-            if (xRegistryName !== undefined && xRegistryName !== null) {
+            if (xRegistryName != null) {
                 localVarHeaderParameter['X-Registry-Name'] = String(xRegistryName);
             }
 
-            if (xRegistryNameEncoded !== undefined && xRegistryNameEncoded !== null) {
+            if (xRegistryNameEncoded != null) {
                 localVarHeaderParameter['X-Registry-Name-Encoded'] = String(xRegistryNameEncoded);
             }
 
-            if (xRegistryDescription !== undefined && xRegistryDescription !== null) {
+            if (xRegistryDescription != null) {
                 localVarHeaderParameter['X-Registry-Description'] = String(xRegistryDescription);
             }
 
-            if (xRegistryDescriptionEncoded !== undefined && xRegistryDescriptionEncoded !== null) {
+            if (xRegistryDescriptionEncoded != null) {
                 localVarHeaderParameter['X-Registry-Description-Encoded'] = String(xRegistryDescriptionEncoded);
             }
 
@@ -646,7 +649,7 @@ export const ArtifactsApiFp = function(configuration?: Configuration) {
          * Creates a new artifact by posting the artifact content.  The body of the request should be the raw content of the artifact.  This is typically in JSON format for *most* of the  supported types, but may be in another format for a few (for example, `PROTOBUF`).  The registry attempts to figure out what kind of artifact is being added from the following supported list:  * Avro (`AVRO`) * Protobuf (`PROTOBUF`) * JSON Schema (`JSON`) * Kafka Connect (`KCONNECT`) * OpenAPI (`OPENAPI`) * AsyncAPI (`ASYNCAPI`) * GraphQL (`GRAPHQL`) * Web Services Description Language (`WSDL`) * XML Schema (`XSD`)  Alternatively, you can specify the artifact type using the `X-Registry-ArtifactType`  HTTP request header, or include a hint in the request\'s `Content-Type`.  For example:  ``` Content-Type: application/json; artifactType=AVRO ```  An artifact is created using the content provided in the body of the request.  This content is created under a unique artifact ID that can be provided in the request using the `X-Registry-ArtifactId` request header.  If not provided in the request, the server generates a unique ID for the artifact.  It is typically recommended that callers provide the ID, because this is typically a meaningful identifier,  and for most use cases should be supplied by the caller.  If an artifact with the provided artifact ID already exists, the default behavior is for the server to reject the content with a 409 error.  However, the caller can supply the `ifExists` query parameter to alter this default behavior. The `ifExists` query parameter can have one of the following values:  * `FAIL` (*default*) - server rejects the content with a 409 error * `UPDATE` - server updates the existing artifact and returns the new metadata * `RETURN` - server does not create or add content to the server, but instead  returns the metadata for the existing artifact * `RETURN_OR_UPDATE` - server returns an existing **version** that matches the  provided content if such a version exists, otherwise a new version is created  This operation may fail for one of the following reasons:  * An invalid `ArtifactType` was indicated (HTTP error `400`) * No `ArtifactType` was indicated and the server could not determine one from the content (HTTP error `400`) * Provided content (request body) was empty (HTTP error `400`) * An artifact with the provided ID already exists (HTTP error `409`) * The content violates one of the configured global rules (HTTP error `409`) * A server error occurred (HTTP error `500`) 
          * @summary Create artifact
          * @param {string} groupId Unique ID of an artifact group.
-         * @param {any} body The content of the artifact being created. This is often, but not always, JSON data representing one of the supported artifact types:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;) 
+         * @param {File} body The content of the artifact being created. This is often, but not always, JSON data representing one of the supported artifact types:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;) 
          * @param {ArtifactType} [xRegistryArtifactType] Specifies the type of the artifact being added. Possible values include:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;)
          * @param {string} [xRegistryArtifactId] A client-provided, globally unique identifier for the new artifact.
          * @param {string} [xRegistryVersion] Specifies the version number of this initial version of the artifact content.  This would typically be a simple integer or a SemVer value.  If not provided, the server will assign a version number automatically (starting with version &#x60;1&#x60;).
@@ -661,7 +664,7 @@ export const ArtifactsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createArtifact(groupId: string, body: any, xRegistryArtifactType?: ArtifactType, xRegistryArtifactId?: string, xRegistryVersion?: string, ifExists?: IfExists, canonical?: boolean, xRegistryDescription?: string, xRegistryDescriptionEncoded?: string, xRegistryName?: string, xRegistryNameEncoded?: string, xRegistryContentHash?: string, xRegistryHashAlgorithm?: 'SHA256' | 'MD5', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArtifactMetaData>> {
+        async createArtifact(groupId: string, body: File, xRegistryArtifactType?: ArtifactType, xRegistryArtifactId?: string, xRegistryVersion?: string, ifExists?: IfExists, canonical?: boolean, xRegistryDescription?: string, xRegistryDescriptionEncoded?: string, xRegistryName?: string, xRegistryNameEncoded?: string, xRegistryContentHash?: string, xRegistryHashAlgorithm?: 'SHA256' | 'MD5', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArtifactMetaData>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createArtifact(groupId, body, xRegistryArtifactType, xRegistryArtifactId, xRegistryVersion, ifExists, canonical, xRegistryDescription, xRegistryDescriptionEncoded, xRegistryName, xRegistryNameEncoded, xRegistryContentHash, xRegistryHashAlgorithm, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -696,7 +699,7 @@ export const ArtifactsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getContentByGlobalId(globalId: number, dereference?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+        async getContentByGlobalId(globalId: number, dereference?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getContentByGlobalId(globalId, dereference, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -707,7 +710,7 @@ export const ArtifactsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getContentByHash(contentHash: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+        async getContentByHash(contentHash: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getContentByHash(contentHash, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -718,7 +721,7 @@ export const ArtifactsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getContentById(contentId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+        async getContentById(contentId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getContentById(contentId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -731,7 +734,7 @@ export const ArtifactsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getLatestArtifact(groupId: string, artifactId: string, dereference?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+        async getLatestArtifact(groupId: string, artifactId: string, dereference?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getLatestArtifact(groupId, artifactId, dereference, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -828,7 +831,7 @@ export const ArtifactsApiFactory = function (configuration?: Configuration, base
          * Creates a new artifact by posting the artifact content.  The body of the request should be the raw content of the artifact.  This is typically in JSON format for *most* of the  supported types, but may be in another format for a few (for example, `PROTOBUF`).  The registry attempts to figure out what kind of artifact is being added from the following supported list:  * Avro (`AVRO`) * Protobuf (`PROTOBUF`) * JSON Schema (`JSON`) * Kafka Connect (`KCONNECT`) * OpenAPI (`OPENAPI`) * AsyncAPI (`ASYNCAPI`) * GraphQL (`GRAPHQL`) * Web Services Description Language (`WSDL`) * XML Schema (`XSD`)  Alternatively, you can specify the artifact type using the `X-Registry-ArtifactType`  HTTP request header, or include a hint in the request\'s `Content-Type`.  For example:  ``` Content-Type: application/json; artifactType=AVRO ```  An artifact is created using the content provided in the body of the request.  This content is created under a unique artifact ID that can be provided in the request using the `X-Registry-ArtifactId` request header.  If not provided in the request, the server generates a unique ID for the artifact.  It is typically recommended that callers provide the ID, because this is typically a meaningful identifier,  and for most use cases should be supplied by the caller.  If an artifact with the provided artifact ID already exists, the default behavior is for the server to reject the content with a 409 error.  However, the caller can supply the `ifExists` query parameter to alter this default behavior. The `ifExists` query parameter can have one of the following values:  * `FAIL` (*default*) - server rejects the content with a 409 error * `UPDATE` - server updates the existing artifact and returns the new metadata * `RETURN` - server does not create or add content to the server, but instead  returns the metadata for the existing artifact * `RETURN_OR_UPDATE` - server returns an existing **version** that matches the  provided content if such a version exists, otherwise a new version is created  This operation may fail for one of the following reasons:  * An invalid `ArtifactType` was indicated (HTTP error `400`) * No `ArtifactType` was indicated and the server could not determine one from the content (HTTP error `400`) * Provided content (request body) was empty (HTTP error `400`) * An artifact with the provided ID already exists (HTTP error `409`) * The content violates one of the configured global rules (HTTP error `409`) * A server error occurred (HTTP error `500`) 
          * @summary Create artifact
          * @param {string} groupId Unique ID of an artifact group.
-         * @param {any} body The content of the artifact being created. This is often, but not always, JSON data representing one of the supported artifact types:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;) 
+         * @param {File} body The content of the artifact being created. This is often, but not always, JSON data representing one of the supported artifact types:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;) 
          * @param {ArtifactType} [xRegistryArtifactType] Specifies the type of the artifact being added. Possible values include:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;)
          * @param {string} [xRegistryArtifactId] A client-provided, globally unique identifier for the new artifact.
          * @param {string} [xRegistryVersion] Specifies the version number of this initial version of the artifact content.  This would typically be a simple integer or a SemVer value.  If not provided, the server will assign a version number automatically (starting with version &#x60;1&#x60;).
@@ -843,7 +846,7 @@ export const ArtifactsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createArtifact(groupId: string, body: any, xRegistryArtifactType?: ArtifactType, xRegistryArtifactId?: string, xRegistryVersion?: string, ifExists?: IfExists, canonical?: boolean, xRegistryDescription?: string, xRegistryDescriptionEncoded?: string, xRegistryName?: string, xRegistryNameEncoded?: string, xRegistryContentHash?: string, xRegistryHashAlgorithm?: 'SHA256' | 'MD5', options?: any): AxiosPromise<ArtifactMetaData> {
+        createArtifact(groupId: string, body: File, xRegistryArtifactType?: ArtifactType, xRegistryArtifactId?: string, xRegistryVersion?: string, ifExists?: IfExists, canonical?: boolean, xRegistryDescription?: string, xRegistryDescriptionEncoded?: string, xRegistryName?: string, xRegistryNameEncoded?: string, xRegistryContentHash?: string, xRegistryHashAlgorithm?: 'SHA256' | 'MD5', options?: any): AxiosPromise<ArtifactMetaData> {
             return localVarFp.createArtifact(groupId, body, xRegistryArtifactType, xRegistryArtifactId, xRegistryVersion, ifExists, canonical, xRegistryDescription, xRegistryDescriptionEncoded, xRegistryName, xRegistryNameEncoded, xRegistryContentHash, xRegistryHashAlgorithm, options).then((request) => request(axios, basePath));
         },
         /**
@@ -875,7 +878,7 @@ export const ArtifactsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getContentByGlobalId(globalId: number, dereference?: boolean, options?: any): AxiosPromise<any> {
+        getContentByGlobalId(globalId: number, dereference?: boolean, options?: any): AxiosPromise<File> {
             return localVarFp.getContentByGlobalId(globalId, dereference, options).then((request) => request(axios, basePath));
         },
         /**
@@ -885,7 +888,7 @@ export const ArtifactsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getContentByHash(contentHash: string, options?: any): AxiosPromise<any> {
+        getContentByHash(contentHash: string, options?: any): AxiosPromise<File> {
             return localVarFp.getContentByHash(contentHash, options).then((request) => request(axios, basePath));
         },
         /**
@@ -895,7 +898,7 @@ export const ArtifactsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getContentById(contentId: number, options?: any): AxiosPromise<any> {
+        getContentById(contentId: number, options?: any): AxiosPromise<File> {
             return localVarFp.getContentById(contentId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -907,7 +910,7 @@ export const ArtifactsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLatestArtifact(groupId: string, artifactId: string, dereference?: boolean, options?: any): AxiosPromise<any> {
+        getLatestArtifact(groupId: string, artifactId: string, dereference?: boolean, options?: any): AxiosPromise<File> {
             return localVarFp.getLatestArtifact(groupId, artifactId, dereference, options).then((request) => request(axios, basePath));
         },
         /**
@@ -996,7 +999,7 @@ export interface ArtifactsApiInterface {
      * Creates a new artifact by posting the artifact content.  The body of the request should be the raw content of the artifact.  This is typically in JSON format for *most* of the  supported types, but may be in another format for a few (for example, `PROTOBUF`).  The registry attempts to figure out what kind of artifact is being added from the following supported list:  * Avro (`AVRO`) * Protobuf (`PROTOBUF`) * JSON Schema (`JSON`) * Kafka Connect (`KCONNECT`) * OpenAPI (`OPENAPI`) * AsyncAPI (`ASYNCAPI`) * GraphQL (`GRAPHQL`) * Web Services Description Language (`WSDL`) * XML Schema (`XSD`)  Alternatively, you can specify the artifact type using the `X-Registry-ArtifactType`  HTTP request header, or include a hint in the request\'s `Content-Type`.  For example:  ``` Content-Type: application/json; artifactType=AVRO ```  An artifact is created using the content provided in the body of the request.  This content is created under a unique artifact ID that can be provided in the request using the `X-Registry-ArtifactId` request header.  If not provided in the request, the server generates a unique ID for the artifact.  It is typically recommended that callers provide the ID, because this is typically a meaningful identifier,  and for most use cases should be supplied by the caller.  If an artifact with the provided artifact ID already exists, the default behavior is for the server to reject the content with a 409 error.  However, the caller can supply the `ifExists` query parameter to alter this default behavior. The `ifExists` query parameter can have one of the following values:  * `FAIL` (*default*) - server rejects the content with a 409 error * `UPDATE` - server updates the existing artifact and returns the new metadata * `RETURN` - server does not create or add content to the server, but instead  returns the metadata for the existing artifact * `RETURN_OR_UPDATE` - server returns an existing **version** that matches the  provided content if such a version exists, otherwise a new version is created  This operation may fail for one of the following reasons:  * An invalid `ArtifactType` was indicated (HTTP error `400`) * No `ArtifactType` was indicated and the server could not determine one from the content (HTTP error `400`) * Provided content (request body) was empty (HTTP error `400`) * An artifact with the provided ID already exists (HTTP error `409`) * The content violates one of the configured global rules (HTTP error `409`) * A server error occurred (HTTP error `500`) 
      * @summary Create artifact
      * @param {string} groupId Unique ID of an artifact group.
-     * @param {any} body The content of the artifact being created. This is often, but not always, JSON data representing one of the supported artifact types:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;) 
+     * @param {File} body The content of the artifact being created. This is often, but not always, JSON data representing one of the supported artifact types:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;) 
      * @param {ArtifactType} [xRegistryArtifactType] Specifies the type of the artifact being added. Possible values include:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;)
      * @param {string} [xRegistryArtifactId] A client-provided, globally unique identifier for the new artifact.
      * @param {string} [xRegistryVersion] Specifies the version number of this initial version of the artifact content.  This would typically be a simple integer or a SemVer value.  If not provided, the server will assign a version number automatically (starting with version &#x60;1&#x60;).
@@ -1012,7 +1015,7 @@ export interface ArtifactsApiInterface {
      * @throws {RequiredError}
      * @memberof ArtifactsApiInterface
      */
-    createArtifact(groupId: string, body: any, xRegistryArtifactType?: ArtifactType, xRegistryArtifactId?: string, xRegistryVersion?: string, ifExists?: IfExists, canonical?: boolean, xRegistryDescription?: string, xRegistryDescriptionEncoded?: string, xRegistryName?: string, xRegistryNameEncoded?: string, xRegistryContentHash?: string, xRegistryHashAlgorithm?: 'SHA256' | 'MD5', options?: AxiosRequestConfig): AxiosPromise<ArtifactMetaData>;
+    createArtifact(groupId: string, body: File, xRegistryArtifactType?: ArtifactType, xRegistryArtifactId?: string, xRegistryVersion?: string, ifExists?: IfExists, canonical?: boolean, xRegistryDescription?: string, xRegistryDescriptionEncoded?: string, xRegistryName?: string, xRegistryNameEncoded?: string, xRegistryContentHash?: string, xRegistryHashAlgorithm?: 'SHA256' | 'MD5', options?: AxiosRequestConfig): AxiosPromise<ArtifactMetaData>;
 
     /**
      * Deletes an artifact completely, resulting in all versions of the artifact also being deleted.  This may fail for one of the following reasons:  * No artifact with the `artifactId` exists (HTTP error `404`) * A server error occurred (HTTP error `500`)
@@ -1044,7 +1047,7 @@ export interface ArtifactsApiInterface {
      * @throws {RequiredError}
      * @memberof ArtifactsApiInterface
      */
-    getContentByGlobalId(globalId: number, dereference?: boolean, options?: AxiosRequestConfig): AxiosPromise<any>;
+    getContentByGlobalId(globalId: number, dereference?: boolean, options?: AxiosRequestConfig): AxiosPromise<File>;
 
     /**
      * Gets the content for an artifact version in the registry using the  SHA-256 hash of the content.  This content hash may be shared by multiple artifact versions in the case where the artifact versions have identical content.  This operation may fail for one of the following reasons:  * No content with this `contentHash` exists (HTTP error `404`) * A server error occurred (HTTP error `500`) 
@@ -1054,7 +1057,7 @@ export interface ArtifactsApiInterface {
      * @throws {RequiredError}
      * @memberof ArtifactsApiInterface
      */
-    getContentByHash(contentHash: string, options?: AxiosRequestConfig): AxiosPromise<any>;
+    getContentByHash(contentHash: string, options?: AxiosRequestConfig): AxiosPromise<File>;
 
     /**
      * Gets the content for an artifact version in the registry using the unique content identifier for that content.  This content ID may be shared by multiple artifact versions in the case where the artifact versions are identical.  This operation may fail for one of the following reasons:  * No content with this `contentId` exists (HTTP error `404`) * A server error occurred (HTTP error `500`) 
@@ -1064,7 +1067,7 @@ export interface ArtifactsApiInterface {
      * @throws {RequiredError}
      * @memberof ArtifactsApiInterface
      */
-    getContentById(contentId: number, options?: AxiosRequestConfig): AxiosPromise<any>;
+    getContentById(contentId: number, options?: AxiosRequestConfig): AxiosPromise<File>;
 
     /**
      * Returns the latest version of the artifact in its raw form.  The `Content-Type` of the response depends on the artifact type.  In most cases, this is `application/json`, but  for some types it may be different (for example, `PROTOBUF`).  This operation may fail for one of the following reasons:  * No artifact with this `artifactId` exists (HTTP error `404`) * A server error occurred (HTTP error `500`) 
@@ -1076,7 +1079,7 @@ export interface ArtifactsApiInterface {
      * @throws {RequiredError}
      * @memberof ArtifactsApiInterface
      */
-    getLatestArtifact(groupId: string, artifactId: string, dereference?: boolean, options?: AxiosRequestConfig): AxiosPromise<any>;
+    getLatestArtifact(groupId: string, artifactId: string, dereference?: boolean, options?: AxiosRequestConfig): AxiosPromise<File>;
 
     /**
      * Returns a list of all artifacts in the group.  This list is paged.
@@ -1164,7 +1167,7 @@ export class ArtifactsApi extends BaseAPI implements ArtifactsApiInterface {
      * Creates a new artifact by posting the artifact content.  The body of the request should be the raw content of the artifact.  This is typically in JSON format for *most* of the  supported types, but may be in another format for a few (for example, `PROTOBUF`).  The registry attempts to figure out what kind of artifact is being added from the following supported list:  * Avro (`AVRO`) * Protobuf (`PROTOBUF`) * JSON Schema (`JSON`) * Kafka Connect (`KCONNECT`) * OpenAPI (`OPENAPI`) * AsyncAPI (`ASYNCAPI`) * GraphQL (`GRAPHQL`) * Web Services Description Language (`WSDL`) * XML Schema (`XSD`)  Alternatively, you can specify the artifact type using the `X-Registry-ArtifactType`  HTTP request header, or include a hint in the request\'s `Content-Type`.  For example:  ``` Content-Type: application/json; artifactType=AVRO ```  An artifact is created using the content provided in the body of the request.  This content is created under a unique artifact ID that can be provided in the request using the `X-Registry-ArtifactId` request header.  If not provided in the request, the server generates a unique ID for the artifact.  It is typically recommended that callers provide the ID, because this is typically a meaningful identifier,  and for most use cases should be supplied by the caller.  If an artifact with the provided artifact ID already exists, the default behavior is for the server to reject the content with a 409 error.  However, the caller can supply the `ifExists` query parameter to alter this default behavior. The `ifExists` query parameter can have one of the following values:  * `FAIL` (*default*) - server rejects the content with a 409 error * `UPDATE` - server updates the existing artifact and returns the new metadata * `RETURN` - server does not create or add content to the server, but instead  returns the metadata for the existing artifact * `RETURN_OR_UPDATE` - server returns an existing **version** that matches the  provided content if such a version exists, otherwise a new version is created  This operation may fail for one of the following reasons:  * An invalid `ArtifactType` was indicated (HTTP error `400`) * No `ArtifactType` was indicated and the server could not determine one from the content (HTTP error `400`) * Provided content (request body) was empty (HTTP error `400`) * An artifact with the provided ID already exists (HTTP error `409`) * The content violates one of the configured global rules (HTTP error `409`) * A server error occurred (HTTP error `500`) 
      * @summary Create artifact
      * @param {string} groupId Unique ID of an artifact group.
-     * @param {any} body The content of the artifact being created. This is often, but not always, JSON data representing one of the supported artifact types:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;) 
+     * @param {File} body The content of the artifact being created. This is often, but not always, JSON data representing one of the supported artifact types:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;) 
      * @param {ArtifactType} [xRegistryArtifactType] Specifies the type of the artifact being added. Possible values include:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;)
      * @param {string} [xRegistryArtifactId] A client-provided, globally unique identifier for the new artifact.
      * @param {string} [xRegistryVersion] Specifies the version number of this initial version of the artifact content.  This would typically be a simple integer or a SemVer value.  If not provided, the server will assign a version number automatically (starting with version &#x60;1&#x60;).
@@ -1180,7 +1183,7 @@ export class ArtifactsApi extends BaseAPI implements ArtifactsApiInterface {
      * @throws {RequiredError}
      * @memberof ArtifactsApi
      */
-    public createArtifact(groupId: string, body: any, xRegistryArtifactType?: ArtifactType, xRegistryArtifactId?: string, xRegistryVersion?: string, ifExists?: IfExists, canonical?: boolean, xRegistryDescription?: string, xRegistryDescriptionEncoded?: string, xRegistryName?: string, xRegistryNameEncoded?: string, xRegistryContentHash?: string, xRegistryHashAlgorithm?: 'SHA256' | 'MD5', options?: AxiosRequestConfig) {
+    public createArtifact(groupId: string, body: File, xRegistryArtifactType?: ArtifactType, xRegistryArtifactId?: string, xRegistryVersion?: string, ifExists?: IfExists, canonical?: boolean, xRegistryDescription?: string, xRegistryDescriptionEncoded?: string, xRegistryName?: string, xRegistryNameEncoded?: string, xRegistryContentHash?: string, xRegistryHashAlgorithm?: 'SHA256' | 'MD5', options?: AxiosRequestConfig) {
         return ArtifactsApiFp(this.configuration).createArtifact(groupId, body, xRegistryArtifactType, xRegistryArtifactId, xRegistryVersion, ifExists, canonical, xRegistryDescription, xRegistryDescriptionEncoded, xRegistryName, xRegistryNameEncoded, xRegistryContentHash, xRegistryHashAlgorithm, options).then((request) => request(this.axios, this.basePath));
     }
 

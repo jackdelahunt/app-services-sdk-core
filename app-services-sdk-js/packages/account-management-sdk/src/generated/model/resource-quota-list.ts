@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { List } from './list';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ResourceQuota } from './resource-quota';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ResourceQuotaListAllOf } from './resource-quota-list-all-of';
 
 /**

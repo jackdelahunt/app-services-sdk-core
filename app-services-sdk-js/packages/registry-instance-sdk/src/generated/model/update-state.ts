@@ -13,6 +13,8 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ArtifactState } from './artifact-state';
 
 /**
@@ -28,4 +30,6 @@ export interface UpdateState {
      */
     'state': ArtifactState;
 }
+
+
 

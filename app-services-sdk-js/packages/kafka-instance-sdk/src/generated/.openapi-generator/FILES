@@ -47,6 +47,7 @@ model/new-topic-input.ts
 model/node.ts
 model/object-reference.ts
 model/offset-type.ts
+model/partition-leader.ts
 model/partition.ts
 model/record-all-of.ts
 model/record-included-property.ts
@@ -61,3 +62,4 @@ model/topic.ts
 model/topics-list-all-of.ts
 model/topics-list.ts
 model/topics-to-reset-offset.ts
+tsconfig.esm.json

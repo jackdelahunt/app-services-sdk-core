@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { Channel } from './channel';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorTypeAllOf } from './connector-type-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ObjectReference } from './object-reference';
 
 /**

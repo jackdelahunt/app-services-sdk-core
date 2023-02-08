@@ -20,3 +20,4 @@ model/registry-status-value.ts
 model/registry.ts
 model/root-type-for-registry.ts
 model/service-status.ts
+tsconfig.esm.json

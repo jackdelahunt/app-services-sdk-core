@@ -18,3 +18,4 @@ model/service-account-create-request-data.ts
 model/service-account-data.ts
 model/service-account-request-data.ts
 model/validation-exception-data.ts
+tsconfig.esm.json

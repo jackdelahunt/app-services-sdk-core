@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ClusterMetricsNodes } from './cluster-metrics-nodes';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ClusterResource } from './cluster-resource';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ClusterUpgrade } from './cluster-upgrade';
 
 /**

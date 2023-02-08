@@ -64,3 +64,4 @@ model/service-account.ts
 model/service-connection-settings.ts
 model/version-metadata-all-of.ts
 model/version-metadata.ts
+tsconfig.esm.json

@@ -111,6 +111,7 @@ export * from './quota-rules-all-of';
 export * from './quota-rules-list';
 export * from './quota-rules-list-all-of';
 export * from './registry';
+export * from './registry-address-value';
 export * from './registry-all-of';
 export * from './registry-create-request';
 export * from './registry-credential';

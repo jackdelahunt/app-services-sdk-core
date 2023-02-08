@@ -13,7 +13,11 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { AccountGroupAllOf } from './account-group-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ObjectReference } from './object-reference';
 
 /**

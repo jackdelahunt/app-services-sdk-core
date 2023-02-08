@@ -13,11 +13,23 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorNamespaceAllOf } from './connector-namespace-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorNamespaceMeta } from './connector-namespace-meta';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorNamespaceQuota } from './connector-namespace-quota';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorNamespaceStatus } from './connector-namespace-status';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorNamespaceTenant } from './connector-namespace-tenant';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ObjectReference } from './object-reference';
 
 /**

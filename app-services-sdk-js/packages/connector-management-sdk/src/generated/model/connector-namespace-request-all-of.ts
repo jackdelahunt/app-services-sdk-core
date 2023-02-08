@@ -13,6 +13,8 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorNamespaceTenantKind } from './connector-namespace-tenant-kind';
 
 /**
@@ -34,4 +36,6 @@ export interface ConnectorNamespaceRequestAllOf {
      */
     'kind'?: ConnectorNamespaceTenantKind;
 }
+
+
 

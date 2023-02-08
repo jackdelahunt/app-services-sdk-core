@@ -13,9 +13,17 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConfigEntry } from './config-entry';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ObjectReference } from './object-reference';
+// May contain unused imports in some cases
+// @ts-ignore
 import { Partition } from './partition';
+// May contain unused imports in some cases
+// @ts-ignore
 import { TopicAllOf } from './topic-all-of';
 
 /**

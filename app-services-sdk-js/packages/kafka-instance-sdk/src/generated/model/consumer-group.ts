@@ -13,10 +13,20 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { Consumer } from './consumer';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConsumerGroupAllOf } from './consumer-group-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConsumerGroupMetrics } from './consumer-group-metrics';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConsumerGroupState } from './consumer-group-state';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ObjectReference } from './object-reference';
 
 /**

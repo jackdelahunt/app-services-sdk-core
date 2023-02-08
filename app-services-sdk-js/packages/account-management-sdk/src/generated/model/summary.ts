@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ObjectReference } from './object-reference';
+// May contain unused imports in some cases
+// @ts-ignore
 import { SummaryAllOf } from './summary-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { SummaryMetrics } from './summary-metrics';
 
 /**

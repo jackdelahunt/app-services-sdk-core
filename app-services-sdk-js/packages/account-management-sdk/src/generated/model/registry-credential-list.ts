@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { List } from './list';
+// May contain unused imports in some cases
+// @ts-ignore
 import { RegistryCredential } from './registry-credential';
+// May contain unused imports in some cases
+// @ts-ignore
 import { RegistryCredentialListAllOf } from './registry-credential-list-all-of';
 
 /**

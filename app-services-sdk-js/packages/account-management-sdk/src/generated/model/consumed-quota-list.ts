@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConsumedQuota } from './consumed-quota';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConsumedQuotaListAllOf } from './consumed-quota-list-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { List } from './list';
 
 /**

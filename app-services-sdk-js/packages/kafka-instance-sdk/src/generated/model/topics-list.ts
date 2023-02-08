@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ListDeprecated } from './list-deprecated';
+// May contain unused imports in some cases
+// @ts-ignore
 import { Topic } from './topic';
+// May contain unused imports in some cases
+// @ts-ignore
 import { TopicsListAllOf } from './topics-list-all-of';
 
 /**

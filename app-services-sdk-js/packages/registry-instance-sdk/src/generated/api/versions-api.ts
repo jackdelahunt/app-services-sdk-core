@@ -13,8 +13,9 @@
  */
 
 
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
-import { Configuration } from '../configuration';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
@@ -73,23 +74,23 @@ export const VersionsApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (xRegistryVersion !== undefined && xRegistryVersion !== null) {
+            if (xRegistryVersion != null) {
                 localVarHeaderParameter['X-Registry-Version'] = String(xRegistryVersion);
             }
 
-            if (xRegistryName !== undefined && xRegistryName !== null) {
+            if (xRegistryName != null) {
                 localVarHeaderParameter['X-Registry-Name'] = String(xRegistryName);
             }
 
-            if (xRegistryDescription !== undefined && xRegistryDescription !== null) {
+            if (xRegistryDescription != null) {
                 localVarHeaderParameter['X-Registry-Description'] = String(xRegistryDescription);
             }
 
-            if (xRegistryDescriptionEncoded !== undefined && xRegistryDescriptionEncoded !== null) {
+            if (xRegistryDescriptionEncoded != null) {
                 localVarHeaderParameter['X-Registry-Description-Encoded'] = String(xRegistryDescriptionEncoded);
             }
 
-            if (xRegistryNameEncoded !== undefined && xRegistryNameEncoded !== null) {
+            if (xRegistryNameEncoded != null) {
                 localVarHeaderParameter['X-Registry-Name-Encoded'] = String(xRegistryNameEncoded);
             }
 
@@ -330,7 +331,7 @@ export const VersionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getArtifactVersion(groupId: string, artifactId: string, version: string, dereference?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+        async getArtifactVersion(groupId: string, artifactId: string, version: string, dereference?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getArtifactVersion(groupId, artifactId, version, dereference, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -412,7 +413,7 @@ export const VersionsApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getArtifactVersion(groupId: string, artifactId: string, version: string, dereference?: boolean, options?: any): AxiosPromise<any> {
+        getArtifactVersion(groupId: string, artifactId: string, version: string, dereference?: boolean, options?: any): AxiosPromise<File> {
             return localVarFp.getArtifactVersion(groupId, artifactId, version, dereference, options).then((request) => request(axios, basePath));
         },
         /**
@@ -490,7 +491,7 @@ export interface VersionsApiInterface {
      * @throws {RequiredError}
      * @memberof VersionsApiInterface
      */
-    getArtifactVersion(groupId: string, artifactId: string, version: string, dereference?: boolean, options?: AxiosRequestConfig): AxiosPromise<any>;
+    getArtifactVersion(groupId: string, artifactId: string, version: string, dereference?: boolean, options?: AxiosRequestConfig): AxiosPromise<File>;
 
     /**
      * Retrieves a single version of the artifact content.  Both the `artifactId` and the unique `version` number must be provided.  The `Content-Type` of the response depends  on the artifact type.  In most cases, this is `application/json`, but for some types  it may be different (for example, `PROTOBUF`).  This operation can fail for the following reasons:  * No artifact with this `artifactId` exists (HTTP error `404`) * No version with this `version` exists (HTTP error `404`) * A server error occurred (HTTP error `500`) 

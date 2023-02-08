@@ -13,7 +13,11 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { RegistryInstanceTypeValue } from './registry-instance-type-value';
+// May contain unused imports in some cases
+// @ts-ignore
 import { RegistryStatusValue } from './registry-status-value';
 
 /**
@@ -89,4 +93,6 @@ export interface RootTypeForRegistry {
      */
     'instance_type': RegistryInstanceTypeValue;
 }
+
+
 

@@ -13,6 +13,8 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorClusterStatusStatus } from './connector-cluster-status-status';
 
 /**

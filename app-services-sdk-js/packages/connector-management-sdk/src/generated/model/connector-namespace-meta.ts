@@ -13,9 +13,17 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorNamespaceMetaAllOf } from './connector-namespace-meta-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorNamespaceQuota } from './connector-namespace-quota';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorNamespaceRequestMeta } from './connector-namespace-request-meta';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ObjectMeta } from './object-meta';
 
 /**

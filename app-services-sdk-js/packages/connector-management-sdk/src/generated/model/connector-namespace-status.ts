@@ -13,6 +13,8 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorNamespaceState } from './connector-namespace-state';
 
 /**
@@ -46,4 +48,6 @@ export interface ConnectorNamespaceStatus {
      */
     'error'?: string;
 }
+
+
 

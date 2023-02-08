@@ -13,7 +13,11 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ObjectReference } from './object-reference';
+// May contain unused imports in some cases
+// @ts-ignore
 import { QuotaRulesAllOf } from './quota-rules-all-of';
 
 /**

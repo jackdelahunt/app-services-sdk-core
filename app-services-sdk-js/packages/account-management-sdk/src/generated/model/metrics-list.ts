@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { List } from './list';
+// May contain unused imports in some cases
+// @ts-ignore
 import { Metric } from './metric';
+// May contain unused imports in some cases
+// @ts-ignore
 import { MetricsListAllOf } from './metrics-list-all-of';
 
 /**

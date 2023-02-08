@@ -13,7 +13,11 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ListAllOf } from './list-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ListResponse } from './list-response';
 
 /**

@@ -13,12 +13,26 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { Channel } from './channel';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorConfiguration } from './connector-configuration';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorDesiredState } from './connector-desired-state';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorRequestMeta } from './connector-request-meta';
+// May contain unused imports in some cases
+// @ts-ignore
 import { KafkaConnectionSettings } from './kafka-connection-settings';
+// May contain unused imports in some cases
+// @ts-ignore
 import { SchemaRegistryConnectionSettings } from './schema-registry-connection-settings';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ServiceAccount } from './service-account';
 
 /**

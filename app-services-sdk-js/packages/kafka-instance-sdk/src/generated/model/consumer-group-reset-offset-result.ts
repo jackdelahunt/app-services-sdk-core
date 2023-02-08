@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConsumerGroupResetOffsetResultAllOf } from './consumer-group-reset-offset-result-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConsumerGroupResetOffsetResultItem } from './consumer-group-reset-offset-result-item';
+// May contain unused imports in some cases
+// @ts-ignore
 import { List } from './list';
 
 /**

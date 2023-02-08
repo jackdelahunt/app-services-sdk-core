@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorNamespaceRequestAllOf } from './connector-namespace-request-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorNamespaceRequestMeta } from './connector-namespace-request-meta';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorNamespaceTenantKind } from './connector-namespace-tenant-kind';
 
 /**

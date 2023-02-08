@@ -37,6 +37,7 @@ export * from './node';
 export * from './object-reference';
 export * from './offset-type';
 export * from './partition';
+export * from './partition-leader';
 export * from './record';
 export * from './record-all-of';
 export * from './record-included-property';

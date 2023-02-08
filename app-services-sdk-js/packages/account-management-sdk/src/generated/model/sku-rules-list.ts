@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { List } from './list';
+// May contain unused imports in some cases
+// @ts-ignore
 import { SkuRules } from './sku-rules';
+// May contain unused imports in some cases
+// @ts-ignore
 import { SkuRulesListAllOf } from './sku-rules-list-all-of';
 
 /**

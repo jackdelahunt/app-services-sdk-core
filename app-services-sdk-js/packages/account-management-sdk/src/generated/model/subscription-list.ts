@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { List } from './list';
+// May contain unused imports in some cases
+// @ts-ignore
 import { Subscription } from './subscription';
+// May contain unused imports in some cases
+// @ts-ignore
 import { SubscriptionListAllOf } from './subscription-list-all-of';
 
 /**

@@ -48,3 +48,4 @@ model/update-state.ts
 model/user-info.ts
 model/version-meta-data.ts
 model/version-search-results.ts
+tsconfig.esm.json

@@ -13,7 +13,11 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { DeletedSubscriptionAllOf } from './deleted-subscription-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { SubscriptionCommonFields } from './subscription-common-fields';
 
 /**

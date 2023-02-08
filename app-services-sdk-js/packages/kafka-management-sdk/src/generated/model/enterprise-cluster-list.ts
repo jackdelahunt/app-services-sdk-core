@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { EnterpriseCluster } from './enterprise-cluster';
+// May contain unused imports in some cases
+// @ts-ignore
 import { EnterpriseClusterListAllOf } from './enterprise-cluster-list-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { List } from './list';
 
 /**

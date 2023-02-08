@@ -13,6 +13,8 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { LogLevel } from './log-level';
 
 /**
@@ -28,4 +30,6 @@ export interface LogConfiguration {
      */
     'level': LogLevel;
 }
+
+
 

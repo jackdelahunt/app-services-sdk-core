@@ -38,3 +38,4 @@ model/sink-connector-list-response.ts
 model/sink-connector-response.ts
 model/source-connector-list-response.ts
 model/source-connector-response.ts
+tsconfig.esm.json

@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { List } from './list';
+// May contain unused imports in some cases
+// @ts-ignore
 import { Plan } from './plan';
+// May contain unused imports in some cases
+// @ts-ignore
 import { PlanListAllOf } from './plan-list-all-of';
 
 /**

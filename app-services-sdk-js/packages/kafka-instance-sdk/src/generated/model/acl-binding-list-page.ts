@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { AclBinding } from './acl-binding';
+// May contain unused imports in some cases
+// @ts-ignore
 import { AclBindingListPageAllOf } from './acl-binding-list-page-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { List } from './list';
 
 /**

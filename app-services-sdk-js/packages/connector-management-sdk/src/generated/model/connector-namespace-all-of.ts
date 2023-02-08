@@ -13,7 +13,11 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorNamespaceStatus } from './connector-namespace-status';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorNamespaceTenant } from './connector-namespace-tenant';
 
 /**

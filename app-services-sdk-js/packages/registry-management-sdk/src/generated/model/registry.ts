@@ -13,9 +13,17 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ObjectReference } from './object-reference';
+// May contain unused imports in some cases
+// @ts-ignore
 import { RegistryInstanceTypeValue } from './registry-instance-type-value';
+// May contain unused imports in some cases
+// @ts-ignore
 import { RegistryStatusValue } from './registry-status-value';
+// May contain unused imports in some cases
+// @ts-ignore
 import { RootTypeForRegistry } from './root-type-for-registry';
 
 /**

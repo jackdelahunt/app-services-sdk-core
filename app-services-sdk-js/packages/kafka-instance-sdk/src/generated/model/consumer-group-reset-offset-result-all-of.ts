@@ -13,6 +13,8 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConsumerGroupResetOffsetResultItem } from './consumer-group-reset-offset-result-item';
 
 /**

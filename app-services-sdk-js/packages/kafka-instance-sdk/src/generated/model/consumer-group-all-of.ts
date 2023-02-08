@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { Consumer } from './consumer';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConsumerGroupMetrics } from './consumer-group-metrics';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConsumerGroupState } from './consumer-group-state';
 
 /**
@@ -48,4 +54,6 @@ export interface ConsumerGroupAllOf {
      */
     'metrics'?: ConsumerGroupMetrics;
 }
+
+
 

@@ -116,6 +116,7 @@ model/quota-rules-list-all-of.ts
 model/quota-rules-list.ts
 model/quota-rules.ts
 model/quota.ts
+model/registry-address-value.ts
 model/registry-all-of.ts
 model/registry-create-request.ts
 model/registry-credential-all-of.ts
@@ -198,3 +199,4 @@ model/terms-review-response.ts
 model/terms-review.ts
 model/token-authorization-request.ts
 model/token-authorization-response.ts
+tsconfig.esm.json

@@ -13,7 +13,11 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { SupportedKafkaInstanceType } from './supported-kafka-instance-type';
+// May contain unused imports in some cases
+// @ts-ignore
 import { SupportedKafkaInstanceTypesListAllOf } from './supported-kafka-instance-types-list-all-of';
 
 /**

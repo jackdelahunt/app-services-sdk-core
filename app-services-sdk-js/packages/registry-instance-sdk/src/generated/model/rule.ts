@@ -13,6 +13,8 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { RuleType } from './rule-type';
 
 /**
@@ -34,4 +36,6 @@ export interface Rule {
      */
     'type'?: RuleType;
 }
+
+
 

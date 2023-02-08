@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { List } from './list';
+// May contain unused imports in some cases
+// @ts-ignore
 import { QuotaCost } from './quota-cost';
+// May contain unused imports in some cases
+// @ts-ignore
 import { QuotaCostListAllOf } from './quota-cost-list-all-of';
 
 /**

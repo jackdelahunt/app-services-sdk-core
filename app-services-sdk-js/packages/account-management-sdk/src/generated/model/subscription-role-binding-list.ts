@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { List } from './list';
+// May contain unused imports in some cases
+// @ts-ignore
 import { SubscriptionRoleBinding } from './subscription-role-binding';
+// May contain unused imports in some cases
+// @ts-ignore
 import { SubscriptionRoleBindingListAllOf } from './subscription-role-binding-list-all-of';
 
 /**

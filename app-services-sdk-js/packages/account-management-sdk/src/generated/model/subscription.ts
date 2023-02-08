@@ -13,13 +13,29 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { Account } from './account';
+// May contain unused imports in some cases
+// @ts-ignore
 import { AccountReference } from './account-reference';
+// May contain unused imports in some cases
+// @ts-ignore
 import { Capability } from './capability';
+// May contain unused imports in some cases
+// @ts-ignore
 import { Label } from './label';
+// May contain unused imports in some cases
+// @ts-ignore
 import { OneMetric } from './one-metric';
+// May contain unused imports in some cases
+// @ts-ignore
 import { Plan } from './plan';
+// May contain unused imports in some cases
+// @ts-ignore
 import { SubscriptionAllOf } from './subscription-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { SubscriptionCommonFields } from './subscription-common-fields';
 
 /**

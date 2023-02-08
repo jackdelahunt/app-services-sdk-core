@@ -13,7 +13,11 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { MetricsRangeQueryListAllOf } from './metrics-range-query-list-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { RangeQuery } from './range-query';
 
 /**

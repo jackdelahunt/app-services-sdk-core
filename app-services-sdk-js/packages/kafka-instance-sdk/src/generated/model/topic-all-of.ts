@@ -13,7 +13,11 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConfigEntry } from './config-entry';
+// May contain unused imports in some cases
+// @ts-ignore
 import { Partition } from './partition';
 
 /**

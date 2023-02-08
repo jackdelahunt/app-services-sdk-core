@@ -13,12 +13,19 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { LogConfiguration } from './log-configuration';
+// May contain unused imports in some cases
+// @ts-ignore
 import { LogLevel } from './log-level';
+// May contain unused imports in some cases
+// @ts-ignore
 import { NamedLogConfigurationAllOf } from './named-log-configuration-all-of';
 
 /**
  * @type NamedLogConfiguration
+ * 
  * @export
  */
 export type NamedLogConfiguration = LogConfiguration & NamedLogConfigurationAllOf;

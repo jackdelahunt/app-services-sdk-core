@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { CloudResource } from './cloud-resource';
+// May contain unused imports in some cases
+// @ts-ignore
 import { CloudResourceListAllOf } from './cloud-resource-list-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { List } from './list';
 
 /**

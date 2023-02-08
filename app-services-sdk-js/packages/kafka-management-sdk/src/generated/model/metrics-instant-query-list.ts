@@ -13,7 +13,11 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { InstantQuery } from './instant-query';
+// May contain unused imports in some cases
+// @ts-ignore
 import { MetricsInstantQueryListAllOf } from './metrics-instant-query-list-all-of';
 
 /**

@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { CloudRegion } from './cloud-region';
+// May contain unused imports in some cases
+// @ts-ignore
 import { CloudRegionListAllOf } from './cloud-region-list-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { List } from './list';
 
 /**

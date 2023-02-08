@@ -13,7 +13,11 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { OffsetType } from './offset-type';
+// May contain unused imports in some cases
+// @ts-ignore
 import { TopicsToResetOffset } from './topics-to-reset-offset';
 
 /**
@@ -41,4 +45,6 @@ export interface ConsumerGroupResetOffsetParameters {
      */
     'topics'?: Array<TopicsToResetOffset>;
 }
+
+
 

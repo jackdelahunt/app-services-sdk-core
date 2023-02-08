@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { DeletedSubscription } from './deleted-subscription';
+// May contain unused imports in some cases
+// @ts-ignore
 import { DeletedSubscriptionListAllOf } from './deleted-subscription-list-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { List } from './list';
 
 /**

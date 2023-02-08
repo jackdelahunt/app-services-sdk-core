@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ClusterTransfer } from './cluster-transfer';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ClusterTransferListAllOf } from './cluster-transfer-list-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { List } from './list';
 
 /**

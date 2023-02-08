@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { KafkaRequest } from './kafka-request';
+// May contain unused imports in some cases
+// @ts-ignore
 import { KafkaRequestListAllOf } from './kafka-request-list-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { List } from './list';
 
 /**

@@ -13,7 +13,11 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ArtifactState } from './artifact-state';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ArtifactType } from './artifact-type';
 
 /**
@@ -101,4 +105,6 @@ export interface VersionMetaData {
      */
     'contentId': number;
 }
+
+
 

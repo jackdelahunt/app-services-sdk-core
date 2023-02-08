@@ -13,7 +13,11 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorClusterRequestMeta } from './connector-cluster-request-meta';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ObjectMeta } from './object-meta';
 
 /**

@@ -13,11 +13,16 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ObjectReference } from './object-reference';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ServiceAccountListItemAllOf } from './service-account-list-item-all-of';
 
 /**
  * @type ServiceAccountListItem
+ * 
  * @export
  */
 export type ServiceAccountListItem = ObjectReference & ServiceAccountListItemAllOf;

@@ -13,6 +13,8 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { BridgeErrorType } from './bridge-error-type';
 
 /**
@@ -52,4 +54,6 @@ export interface BridgeErrorInstance {
      */
     'uuid'?: string;
 }
+
+
 

@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { AccountReference } from './account-reference';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ObjectReference } from './object-reference';
+// May contain unused imports in some cases
+// @ts-ignore
 import { SubscriptionRoleBindingAllOf } from './subscription-role-binding-all-of';
 
 /**

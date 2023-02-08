@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ObjectReference } from './object-reference';
+// May contain unused imports in some cases
+// @ts-ignore
 import { Permission } from './permission';
+// May contain unused imports in some cases
+// @ts-ignore
 import { RoleAllOf } from './role-all-of';
 
 /**

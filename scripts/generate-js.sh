@@ -40,7 +40,7 @@ generate_sdk() {
     "$file_name" -o "$output_path" "${generate_command_params[@]}"
 }
 
-npx @openapitools/openapi-generator-cli version-manager set 5.4.0
+npx @openapitools/openapi-generator-cli version-manager set 6.3.0
 echo "Generating SDKs"
 additional_properties="ngVersion=6.1.7,npmName=${PACKAGE_NAME},supportsES6=true,withInterfaces=true,withSeparateModelsAndApi=true,modelPackage=model,apiPackage=api"
 

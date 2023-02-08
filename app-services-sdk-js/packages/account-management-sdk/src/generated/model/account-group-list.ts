@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { AccountGroup } from './account-group';
+// May contain unused imports in some cases
+// @ts-ignore
 import { AccountGroupListAllOf } from './account-group-list-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { List } from './list';
 
 /**

@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { KafkaConnectionSettings } from './kafka-connection-settings';
+// May contain unused imports in some cases
+// @ts-ignore
 import { SchemaRegistryConnectionSettings } from './schema-registry-connection-settings';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ServiceAccount } from './service-account';
 
 /**

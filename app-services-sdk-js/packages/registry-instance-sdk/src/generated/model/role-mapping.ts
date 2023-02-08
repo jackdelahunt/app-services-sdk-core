@@ -13,6 +13,8 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { RoleType } from './role-type';
 
 /**
@@ -40,4 +42,6 @@ export interface RoleMapping {
      */
     'principalName'?: string;
 }
+
+
 

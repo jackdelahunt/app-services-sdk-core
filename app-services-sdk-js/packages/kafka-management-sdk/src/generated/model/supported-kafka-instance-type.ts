@@ -13,8 +13,12 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { SupportedKafkaBillingModel } from './supported-kafka-billing-model';
-import { SupportedKafkaSize } from './supported-kafka-size';
+// May contain unused imports in some cases
+// @ts-ignore
+import { SupportedKafkaInstanceTypeSizesInner } from './supported-kafka-instance-type-sizes-inner';
 
 /**
  * Supported Kafka instance type
@@ -42,9 +46,9 @@ export interface SupportedKafkaInstanceType {
     'supported_billing_models': Array<SupportedKafkaBillingModel>;
     /**
      * A list of Kafka instance sizes available for this instance type
-     * @type {Array<SupportedKafkaSize>}
+     * @type {Array<SupportedKafkaInstanceTypeSizesInner>}
      * @memberof SupportedKafkaInstanceType
      */
-    'sizes'?: Array<SupportedKafkaSize>;
+    'sizes'?: Array<SupportedKafkaInstanceTypeSizesInner>;
 }
 

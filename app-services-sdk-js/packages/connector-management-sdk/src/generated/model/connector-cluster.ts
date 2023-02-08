@@ -13,9 +13,17 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorClusterMeta } from './connector-cluster-meta';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorClusterStatus } from './connector-cluster-status';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorClusterStatusStatus } from './connector-cluster-status-status';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ObjectReference } from './object-reference';
 
 /**

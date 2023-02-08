@@ -22,9 +22,9 @@
 export interface AccessTokenCfg {
     /**
      * 
-     * @type {{ [key: string]: object; }}
+     * @type {{ [key: string]: any; }}
      * @memberof AccessTokenCfg
      */
-    'auths': { [key: string]: object; };
+    'auths': { [key: string]: any; };
 }
 

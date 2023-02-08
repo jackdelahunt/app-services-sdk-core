@@ -13,7 +13,11 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { CloudAccount } from './cloud-account';
+// May contain unused imports in some cases
+// @ts-ignore
 import { RelatedResource } from './related-resource';
 
 /**

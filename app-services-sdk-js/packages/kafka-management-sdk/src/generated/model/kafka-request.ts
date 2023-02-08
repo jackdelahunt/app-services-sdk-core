@@ -13,8 +13,14 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { KafkaRequestAllOf } from './kafka-request-all-of';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ObjectReference } from './object-reference';
+// May contain unused imports in some cases
+// @ts-ignore
 import { SupportedKafkaSizeBytesValueItem } from './supported-kafka-size-bytes-value-item';
 
 /**

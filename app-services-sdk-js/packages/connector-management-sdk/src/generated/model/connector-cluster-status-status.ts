@@ -13,6 +13,8 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorClusterState } from './connector-cluster-state';
 
 /**
@@ -34,4 +36,6 @@ export interface ConnectorClusterStatusStatus {
      */
     'error'?: string;
 }
+
+
 

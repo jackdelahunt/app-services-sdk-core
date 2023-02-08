@@ -13,7 +13,11 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { Channel } from './channel';
+// May contain unused imports in some cases
+// @ts-ignore
 import { ConnectorDesiredState } from './connector-desired-state';
 
 /**
@@ -59,4 +63,6 @@ export interface ConnectorRequestMeta {
      */
     'annotations'?: { [key: string]: string; };
 }
+
+
 
