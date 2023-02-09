@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 ## DeleteEnterpriseClusterById
 
-> Error DeleteEnterpriseClusterById(ctx, id).Async(async).Force(force).Execute()
+> Error DeleteEnterpriseClusterById(ctx, id).Async(async).Execute()
 
 
 
@@ -33,11 +33,10 @@ import (
 func main() {
     async := true // bool | Perform the action in an asynchronous manner
     id := "id_example" // string | ID of the enterprise data plane cluster
-    force := true // bool | When provided with value: true - enterprise cluster will be deleted alongside all kafkas present on the cluster. When skipped and enterprise cluster has any kafkas associated with it, the request will fail. (optional)
 
     configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.EnterpriseDataplaneClustersApi.DeleteEnterpriseClusterById(context.Background(), id).Async(async).Force(force).Execute()
+    api_client := openapiclient.NewAPIClient(configuration)
+    resp, r, err := api_client.EnterpriseDataplaneClustersApi.DeleteEnterpriseClusterById(context.Background(), id).Async(async).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `EnterpriseDataplaneClustersApi.DeleteEnterpriseClusterById``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -64,7 +63,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **async** | **bool** | Perform the action in an asynchronous manner | 
 
- **force** | **bool** | When provided with value: true - enterprise cluster will be deleted alongside all kafkas present on the cluster. When skipped and enterprise cluster has any kafkas associated with it, the request will fail. | 
 
 ### Return type
 
@@ -108,8 +106,8 @@ func main() {
     id := "id_example" // string | ID of the enterprise data plane cluster
 
     configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.EnterpriseDataplaneClustersApi.GetEnterpriseClusterById(context.Background(), id).Execute()
+    api_client := openapiclient.NewAPIClient(configuration)
+    resp, r, err := api_client.EnterpriseDataplaneClustersApi.GetEnterpriseClusterById(context.Background(), id).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `EnterpriseDataplaneClustersApi.GetEnterpriseClusterById``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -178,8 +176,8 @@ func main() {
     id := "id_example" // string | ID of the enterprise data plane cluster
 
     configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.EnterpriseDataplaneClustersApi.GetEnterpriseClusterWithAddonParameters(context.Background(), id).Execute()
+    api_client := openapiclient.NewAPIClient(configuration)
+    resp, r, err := api_client.EnterpriseDataplaneClustersApi.GetEnterpriseClusterWithAddonParameters(context.Background(), id).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `EnterpriseDataplaneClustersApi.GetEnterpriseClusterWithAddonParameters``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -247,8 +245,8 @@ import (
 func main() {
 
     configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.EnterpriseDataplaneClustersApi.GetEnterpriseOsdClusters(context.Background()).Execute()
+    api_client := openapiclient.NewAPIClient(configuration)
+    resp, r, err := api_client.EnterpriseDataplaneClustersApi.GetEnterpriseOsdClusters(context.Background()).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `EnterpriseDataplaneClustersApi.GetEnterpriseOsdClusters``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -306,11 +304,11 @@ import (
 )
 
 func main() {
-    enterpriseOsdClusterPayload := *openapiclient.NewEnterpriseOsdClusterPayload(false, "ClusterId_example", "ClusterExternalId_example", "ClusterIngressDnsName_example", int32(123)) // EnterpriseOsdClusterPayload | Enterprise data plane cluster details
+    enterpriseOsdClusterPayload := *openapiclient.NewEnterpriseOsdClusterPayload(false, "ClusterId_example", "ClusterIngressDnsName_example", int32(123)) // EnterpriseOsdClusterPayload | Enterprise data plane cluster details
 
     configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.EnterpriseDataplaneClustersApi.RegisterEnterpriseOsdCluster(context.Background()).EnterpriseOsdClusterPayload(enterpriseOsdClusterPayload).Execute()
+    api_client := openapiclient.NewAPIClient(configuration)
+    resp, r, err := api_client.EnterpriseDataplaneClustersApi.RegisterEnterpriseOsdCluster(context.Background()).EnterpriseOsdClusterPayload(enterpriseOsdClusterPayload).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `EnterpriseDataplaneClustersApi.RegisterEnterpriseOsdCluster``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
