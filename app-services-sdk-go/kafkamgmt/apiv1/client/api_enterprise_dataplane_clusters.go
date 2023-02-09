@@ -3,7 +3,7 @@ Kafka Management API
 
 Kafka Management API is a REST API to manage Kafka instances
 
-API version: 1.14.0
+API version: 1.15.0
 Contact: rhosak-support@redhat.com
 */
 
@@ -103,18 +103,11 @@ type ApiDeleteEnterpriseClusterByIdRequest struct {
 	ApiService EnterpriseDataplaneClustersApi
 	async *bool
 	id string
-	force *bool
 }
 
 // Perform the action in an asynchronous manner
 func (r ApiDeleteEnterpriseClusterByIdRequest) Async(async bool) ApiDeleteEnterpriseClusterByIdRequest {
 	r.async = &async
-	return r
-}
-
-// When provided with value: true - enterprise cluster will be deleted alongside all kafkas present on the cluster. When skipped and enterprise cluster has any kafkas associated with it, the request will fail.
-func (r ApiDeleteEnterpriseClusterByIdRequest) Force(force bool) ApiDeleteEnterpriseClusterByIdRequest {
-	r.force = &force
 	return r
 }
 
@@ -163,9 +156,6 @@ func (a *EnterpriseDataplaneClustersApiService) DeleteEnterpriseClusterByIdExecu
 	}
 
 	localVarQueryParams.Add("async", parameterToString(*r.async, ""))
-	if r.force != nil {
-		localVarQueryParams.Add("force", parameterToString(*r.force, ""))
-	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 

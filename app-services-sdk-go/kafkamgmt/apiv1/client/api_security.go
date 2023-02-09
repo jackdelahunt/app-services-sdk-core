@@ -3,7 +3,7 @@ Kafka Management API
 
 Kafka Management API is a REST API to manage Kafka instances
 
-API version: 1.14.0
+API version: 1.15.0
 Contact: rhosak-support@redhat.com
 */
 
@@ -368,7 +368,7 @@ func (a *SecurityApiService) DeleteServiceAccountByIdExecute(r ApiDeleteServiceA
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v interface{}
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -867,7 +867,7 @@ func (a *SecurityApiService) ResetServiceAccountCredsExecute(r ApiResetServiceAc
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v interface{}
+			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

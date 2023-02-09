@@ -8,7 +8,7 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   title: Kafka Management API
-  version: 1.14.0
+  version: 1.15.0
 servers:
 - description: Main (production) server
   url: https://api.openshift.com
@@ -286,6 +286,99 @@ paths:
           description: Unexpected error occurred
       security:
       - Bearer: []
+  /api/kafkas_mgmt/v1/kafkas/{id}/promote:
+    post:
+      description: Promote a Kafka instance. Promotion is performed asynchronously.
+        The `async` query parameter has to be set to `true`. Only kafka instances
+        with an `eval` billing_model are supported
+      operationId: promoteKafka
+      parameters:
+      - description: The ID of record
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Perform the action in an asynchronous manner. False by default.
+        explode: true
+        in: query
+        name: async
+        required: true
+        schema:
+          type: boolean
+        style: form
+      requestBody:
+        content:
+          application/json:
+            examples:
+              KafkaPromoteRequestExample:
+                $ref: '#/components/examples/KafkaPromoteRequestExample'
+            schema:
+              $ref: '#/components/schemas/KafkaPromoteRequest'
+        description: Kafka promotion request
+        required: true
+      responses:
+        "202":
+          description: Kafka promotion request accepted
+        "400":
+          content:
+            application/json:
+              examples:
+                "400CreationExample":
+                  $ref: '#/components/examples/400CreationExample'
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Validation errors occurred
+        "401":
+          content:
+            application/json:
+              examples:
+                "401Example":
+                  $ref: '#/components/examples/401Example'
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Auth token is invalid
+        "403":
+          content:
+            application/json:
+              examples:
+                "403Example":
+                  $ref: '#/components/examples/403Example'
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: User forbidden either because the user is not authorized to
+            access the service.
+        "404":
+          content:
+            application/json:
+              examples:
+                "404Example":
+                  $ref: '#/components/examples/404Example'
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The requested resource doesn't exist
+        "409":
+          content:
+            application/json:
+              examples:
+                "409NameConflictExample":
+                  $ref: '#/components/examples/409NameConflictExample'
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: A conflict has been detected with the usage of this resource
+        "500":
+          content:
+            application/json:
+              examples:
+                "500Example":
+                  $ref: '#/components/examples/500Example'
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: A server error occurred while promoting the Kafka request
+      security:
+      - Bearer: []
   /api/kafkas_mgmt/v1/kafkas:
     get:
       description: Returns a list of Kafka requests
@@ -373,7 +466,7 @@ paths:
 
           ```
           name = my-kafka and cloud_provider = aws
-          ```[p-]
+          ```
 
           To return a Kafka instance with a name that starts with `my`, use the following syntax:
 
@@ -870,7 +963,8 @@ paths:
               examples:
                 "500Example":
                   $ref: '#/components/examples/500Example'
-              schema: {}
+              schema:
+                $ref: '#/components/schemas/Error'
           description: Unexpected error occurred
       security:
       - Bearer: []
@@ -950,7 +1044,8 @@ paths:
               examples:
                 "500Example":
                   $ref: '#/components/examples/500Example'
-              schema: {}
+              schema:
+                $ref: '#/components/schemas/Error'
           description: Unexpected error occurred
       security:
       - Bearer: []
@@ -1313,16 +1408,6 @@ paths:
         schema:
           type: boolean
         style: form
-      - description: |-
-          When provided with value: true - enterprise cluster will be deleted alongside all kafkas present on the cluster.
-          When skipped and enterprise cluster has any kafkas associated with it, the request will fail.
-        explode: true
-        in: query
-        name: force
-        required: false
-        schema:
-          type: boolean
-        style: form
       - description: ID of the enterprise data plane cluster
         explode: false
         in: path
@@ -1591,6 +1676,7 @@ components:
         billing_cloud_account_id: "123456789012"
         marketplace: aws
         billing_model: marketplace
+        cluster_id: 21grk30a21grk30a21grk30a21grk30a
     KafkaRequestFailedCreationStatusExample:
       value:
         id: 1iSY6RQ3JKI8Q0OTmjQFd3ocFRg
@@ -1609,6 +1695,11 @@ components:
         failed_reason: a reason the Kafka request creation failed
         instance_type: standard
         reauthentication_enabled: true
+    KafkaPromoteRequestExample:
+      value:
+        desired_kafka_billing_model: marketplace
+        desired_marketplace: aws
+        desired_billing_cloud_account_id: "123456"
     SupportedKafkaInstanceTypeListExample:
       value:
         id: developer
@@ -1880,7 +1971,6 @@ components:
     EnterpriseOsdClusterPayloadExample:
       value:
         cluster_id: 1234abcd1234abcd1234abcd1234abcd
-        cluster_external_id: 69d631de-9b7f-4bc2-bf4f-4d3295a7b25e
         cluster_ingress_dns_name: apps.enterprise-aws.awdk.s1.devshift.org
         kafka_machine_pool_node_count: 9
         access_kafkas_via_private_network: false
@@ -2025,7 +2115,7 @@ components:
 
         ```
         name = my-kafka and cloud_provider = aws
-        ```[p-]
+        ```
 
         To return a Kafka instance with a name that starts with `my`, use the following syntax:
 
@@ -2077,12 +2167,7 @@ components:
           type: integer
         total:
           type: integer
-        items:
-          items:
-            $ref: '#/components/schemas/ObjectReference'
-          type: array
       required:
-      - items
       - kind
       - page
       - size
@@ -2152,6 +2237,7 @@ components:
       description: Schema for the request body sent to /kafkas POST
       example:
         reauthentication_enabled: true
+        cluster_id: cluster_id
         marketplace: marketplace
         billing_model: billing_model
         billing_cloud_account_id: billing_cloud_account_id
@@ -2194,8 +2280,38 @@ components:
           description: billing model to use
           nullable: true
           type: string
+        cluster_id:
+          description: enterprise OSD cluster ID to be used for kafka creation
+          nullable: true
+          type: string
       required:
       - name
+      type: object
+    KafkaPromoteRequest:
+      example:
+        desired_billing_cloud_account_id: desired_billing_cloud_account_id
+        desired_marketplace: desired_marketplace
+        desired_kafka_billing_model: desired_kafka_billing_model
+      properties:
+        desired_kafka_billing_model:
+          description: "The desired Kafka billing model to promote the kafka instance\
+            \ to. Promotion is performed asynchronously. Accepted values: ['marketplace',\
+            \ 'standard']"
+          minLength: 1
+          type: string
+        desired_marketplace:
+          description: "The desired billing marketplace to promote the kafka instance\
+            \ to. Accepted values: ['aws', 'rhm']. Only considered when desired_kafka_billing_model\
+            \ is 'marketplace'"
+          minLength: 1
+          type: string
+        desired_billing_cloud_account_id:
+          description: The desired Kafka billing cloud account ID to promote the kafka
+            instance to. Only considered when desired_kafka_billing_model is 'marketplace'
+          minLength: 1
+          type: string
+      required:
+      - desired_kafka_billing_model
       type: object
     SupportedKafkaInstanceTypesList:
       allOf:
@@ -2238,7 +2354,7 @@ components:
           type: string
         ams_product:
           description: "AMS product to be used. Accepted values: ['RHOSAK', 'RHOSAKTrial',\
-            \ 'RHOSAKEval']"
+            \ 'RHOSAKEval', 'RHOSAKCC']"
           minLength: 1
           type: string
         ams_billing_models:
@@ -2493,7 +2609,6 @@ components:
       example:
         kafka_machine_pool_node_count: 0
         cluster_id: cluster_id
-        cluster_external_id: cluster_external_id
         access_kafkas_via_private_network: true
         cluster_ingress_dns_name: cluster_ingress_dns_name
       properties:
@@ -2504,10 +2619,6 @@ components:
         cluster_id:
           description: The data plane cluster ID. This is the ID of the cluster obtained
             from OpenShift Cluster Manager (OCM) API
-          type: string
-        cluster_external_id:
-          description: external cluster ID. Can be obtained from the response JSON
-            of OCM get /api/clusters_mgmt/v1/clusters/<cluster_id>
           type: string
         cluster_ingress_dns_name:
           description: dns name of the cluster. Can be obtained from the response
@@ -2524,7 +2635,6 @@ components:
           type: integer
       required:
       - access_kafkas_via_private_network
-      - cluster_external_id
       - cluster_id
       - cluster_ingress_dns_name
       - kafka_machine_pool_node_count
@@ -2548,6 +2658,8 @@ components:
           items:
             $ref: '#/components/schemas/Error'
           type: array
+      required:
+      - items
       type: object
       example: null
     KafkaRequest_allOf:
@@ -2647,6 +2759,19 @@ components:
           type: string
         billing_model:
           type: string
+        promotion_status:
+          description: "Status of the Kafka request promotion. Possible values: ['promoting',\
+            \ 'failed']. If unset it means no promotion is in progress."
+          type: string
+        cluster_id:
+          description: The ID of the data plane where Kafka is deployed on. This information
+            is only returned for kafka whose billing model is enterprise
+          nullable: true
+          type: string
+        promotion_details:
+          description: Details of the Kafka request promotion. It can be set when
+            a Kafka request promotion is in progress or has failed
+          type: string
       required:
       - multi_az
       - reauthentication_enabled
@@ -2660,6 +2785,8 @@ components:
             allOf:
             - $ref: '#/components/schemas/KafkaRequest'
           type: array
+      required:
+      - items
       type: object
     EnterpriseClusterList_allOf:
       example: "{\"kind\":\"ClusterList\",\"page\":\"1\",\"size\":\"1\",\"total\"\
@@ -2671,6 +2798,8 @@ components:
             allOf:
             - $ref: '#/components/schemas/EnterpriseCluster'
           type: array
+      required:
+      - items
       type: object
     EnterpriseCluster_allOf:
       properties:
@@ -2711,6 +2840,8 @@ components:
             allOf:
             - $ref: '#/components/schemas/SupportedKafkaInstanceType'
           type: array
+      required:
+      - items
       type: object
     SupportedKafkaInstanceType_sizes_inner:
       allOf:
@@ -2724,6 +2855,8 @@ components:
             allOf:
             - $ref: '#/components/schemas/CloudProvider'
           type: array
+      required:
+      - items
       type: object
     CloudRegionList_allOf:
       example: "{\"kind\":\"CloudRegionList\",\"page\":\"1\",\"size\":\"1\",\"total\"\
@@ -2734,6 +2867,8 @@ components:
             allOf:
             - $ref: '#/components/schemas/CloudRegion'
           type: array
+      required:
+      - items
       type: object
     ServiceAccount_allOf:
       example: "{\"$ref\":\"#/components/examples/ServiceAccountExample\"}"
