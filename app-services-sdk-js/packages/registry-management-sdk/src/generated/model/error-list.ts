@@ -15,15 +15,15 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { ErrorListAllOf } from './error-list-all-of';
+import { AbstractList } from './abstract-list';
 // May contain unused imports in some cases
 // @ts-ignore
-import { List } from './list';
+import { ErrorListAllOf } from './error-list-all-of';
 
 /**
  * @type ErrorList
  * @export
  */
-export type ErrorList = ErrorListAllOf & List;
+export type ErrorList = AbstractList & ErrorListAllOf;
 
 
