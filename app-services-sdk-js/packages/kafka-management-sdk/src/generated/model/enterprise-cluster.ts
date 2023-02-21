@@ -18,12 +18,18 @@
 import { EnterpriseClusterAllOf } from './enterprise-cluster-all-of';
 // May contain unused imports in some cases
 // @ts-ignore
-import { ObjectReference } from './object-reference';
+import { EnterpriseClusterAllOfCapacityInformation } from './enterprise-cluster-all-of-capacity-information';
+// May contain unused imports in some cases
+// @ts-ignore
+import { EnterpriseClusterListItem } from './enterprise-cluster-list-item';
+// May contain unused imports in some cases
+// @ts-ignore
+import { SupportedKafkaInstanceTypesList } from './supported-kafka-instance-types-list';
 
 /**
  * @type EnterpriseCluster
  * @export
  */
-export type EnterpriseCluster = EnterpriseClusterAllOf & ObjectReference;
+export type EnterpriseCluster = EnterpriseClusterAllOf & EnterpriseClusterListItem;
 
 
