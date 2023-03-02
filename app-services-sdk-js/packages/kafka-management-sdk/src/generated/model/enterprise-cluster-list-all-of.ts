@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { EnterpriseCluster } from './enterprise-cluster';
+import { EnterpriseClusterListItem } from './enterprise-cluster-list-item';
 
 /**
  * 
@@ -25,9 +25,9 @@ import { EnterpriseCluster } from './enterprise-cluster';
 export interface EnterpriseClusterListAllOf {
     /**
      * 
-     * @type {Array<EnterpriseCluster>}
+     * @type {Array<EnterpriseClusterListItem>}
      * @memberof EnterpriseClusterListAllOf
      */
-    'items': Array<EnterpriseCluster>;
+    'items': Array<EnterpriseClusterListItem>;
 }
 
