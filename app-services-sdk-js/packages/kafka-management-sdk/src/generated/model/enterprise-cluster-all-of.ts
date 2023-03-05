@@ -13,6 +13,12 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import { EnterpriseClusterAllOfCapacityInformation } from './enterprise-cluster-all-of-capacity-information';
+// May contain unused imports in some cases
+// @ts-ignore
+import { SupportedKafkaInstanceTypesList } from './supported-kafka-instance-types-list';
 
 /**
  * 
@@ -21,22 +27,16 @@
  */
 export interface EnterpriseClusterAllOf {
     /**
-     * Indicates whether Kafkas created on this data plane cluster have to be accessed via private network
-     * @type {boolean}
+     * 
+     * @type {SupportedKafkaInstanceTypesList}
      * @memberof EnterpriseClusterAllOf
      */
-    'access_kafkas_via_private_network': boolean;
+    'supported_instance_types'?: SupportedKafkaInstanceTypesList;
     /**
-     * ocm cluster id of the registered Enterprise cluster
-     * @type {string}
+     * 
+     * @type {EnterpriseClusterAllOfCapacityInformation}
      * @memberof EnterpriseClusterAllOf
      */
-    'cluster_id'?: string;
-    /**
-     * status of registered Enterprise cluster
-     * @type {string}
-     * @memberof EnterpriseClusterAllOf
-     */
-    'status'?: string;
+    'capacity_information'?: EnterpriseClusterAllOfCapacityInformation;
 }
 

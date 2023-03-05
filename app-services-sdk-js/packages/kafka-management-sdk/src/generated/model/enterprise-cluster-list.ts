@@ -15,10 +15,10 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { EnterpriseCluster } from './enterprise-cluster';
+import { EnterpriseClusterListAllOf } from './enterprise-cluster-list-all-of';
 // May contain unused imports in some cases
 // @ts-ignore
-import { EnterpriseClusterListAllOf } from './enterprise-cluster-list-all-of';
+import { EnterpriseClusterListItem } from './enterprise-cluster-list-item';
 // May contain unused imports in some cases
 // @ts-ignore
 import { List } from './list';
