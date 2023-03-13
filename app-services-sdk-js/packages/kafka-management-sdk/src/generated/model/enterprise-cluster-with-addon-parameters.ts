@@ -15,19 +15,19 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
+import { EnterpriseClusterListItem } from './enterprise-cluster-list-item';
+// May contain unused imports in some cases
+// @ts-ignore
 import { EnterpriseClusterWithAddonParametersAllOf } from './enterprise-cluster-with-addon-parameters-all-of';
 // May contain unused imports in some cases
 // @ts-ignore
 import { FleetshardParameter } from './fleetshard-parameter';
-// May contain unused imports in some cases
-// @ts-ignore
-import { ObjectReference } from './object-reference';
 
 /**
  * @type EnterpriseClusterWithAddonParameters
  * Enterprise cluster with addon parameters
  * @export
  */
-export type EnterpriseClusterWithAddonParameters = EnterpriseClusterWithAddonParametersAllOf & ObjectReference;
+export type EnterpriseClusterWithAddonParameters = EnterpriseClusterListItem & EnterpriseClusterWithAddonParametersAllOf;
 
 
