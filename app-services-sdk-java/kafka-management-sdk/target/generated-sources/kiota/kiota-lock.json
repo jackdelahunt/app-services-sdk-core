@@ -1,0 +1,29 @@
+{
+  "descriptionHash": "368BCEA12FB7D1E2F0936A7E4E66416EC685B31AF301920330B5DA61277AE0DADAB6B5D13CDBBC6B452ED63A951D193E5E59C0F5B0B305F5ADAE68AA051FA430",
+  "descriptionLocation": "/home/runner/work/app-services-sdk-core/app-services-sdk-core/app-services-sdk-java/kafka-management-sdk/target/openapi-spec/kas-fleet-manager.yaml",
+  "lockFileVersion": "1.0.0",
+  "kiotaVersion": "0.11.1-preview",
+  "clientClassName": "ApiClient",
+  "clientNamespaceName": "com.openshift.cloud.api.kas",
+  "language": "Java",
+  "usesBackingStore": false,
+  "includeAdditionalData": true,
+  "serializers": [
+    "Microsoft.Kiota.Serialization.Json.JsonSerializationWriterFactory",
+    "Microsoft.Kiota.Serialization.Text.TextSerializationWriterFactory",
+    "Microsoft.Kiota.Serialization.Form.FormSerializationWriterFactory"
+  ],
+  "deserializers": [
+    "Microsoft.Kiota.Serialization.Json.JsonParseNodeFactory",
+    "Microsoft.Kiota.Serialization.Text.TextParseNodeFactory",
+    "Microsoft.Kiota.Serialization.Form.FormParseNodeFactory"
+  ],
+  "structuredMimeTypes": [
+    "application/json",
+    "text/plain",
+    "application/x-www-form-urlencoded"
+  ],
+  "includePatterns": [],
+  "excludePatterns": [],
+  "disabledValidationRules": []
+}

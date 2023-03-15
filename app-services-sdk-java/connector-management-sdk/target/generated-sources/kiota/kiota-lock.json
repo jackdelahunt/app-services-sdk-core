@@ -1,0 +1,29 @@
+{
+  "descriptionHash": "C20864C214D8B825969F0140132D8C3599BE2F3D51E4921A85F2B8A561D2F96FB5BB322E73040B35F6A4333F389D570DE9D4777B45C231E730AC528182AA8823",
+  "descriptionLocation": "/home/runner/work/app-services-sdk-core/app-services-sdk-core/app-services-sdk-java/connector-management-sdk/target/openapi-spec/connector_mgmt.yaml",
+  "lockFileVersion": "1.0.0",
+  "kiotaVersion": "0.11.1-preview",
+  "clientClassName": "ApiClient",
+  "clientNamespaceName": "com.openshift.cloud.api.connector",
+  "language": "Java",
+  "usesBackingStore": false,
+  "includeAdditionalData": true,
+  "serializers": [
+    "Microsoft.Kiota.Serialization.Json.JsonSerializationWriterFactory",
+    "Microsoft.Kiota.Serialization.Text.TextSerializationWriterFactory",
+    "Microsoft.Kiota.Serialization.Form.FormSerializationWriterFactory"
+  ],
+  "deserializers": [
+    "Microsoft.Kiota.Serialization.Json.JsonParseNodeFactory",
+    "Microsoft.Kiota.Serialization.Text.TextParseNodeFactory",
+    "Microsoft.Kiota.Serialization.Form.FormParseNodeFactory"
+  ],
+  "structuredMimeTypes": [
+    "application/json",
+    "text/plain",
+    "application/x-www-form-urlencoded"
+  ],
+  "includePatterns": [],
+  "excludePatterns": [],
+  "disabledValidationRules": []
+}

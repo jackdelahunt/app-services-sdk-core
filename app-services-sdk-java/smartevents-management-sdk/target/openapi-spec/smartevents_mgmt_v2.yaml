@@ -1,0 +1,1948 @@
+---
+openapi: 3.0.3
+info:
+  title: Red Hat Openshift SmartEvents Fleet Manager V2
+  description: The API exposed by the fleet manager of the SmartEvents service.
+  contact:
+    name: Development Team
+    email: openbridge-dev@redhat.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  version: 0.0.1
+servers:
+- url: https://api.stage.openshift.com
+- url: http://localhost:8000
+- url: https://api.openshift.com
+- url: /
+tags:
+- name: Bridges
+  description: "The API that allow the user to retrieve, create or delete Bridge instances."
+- name: Cloud Providers
+  description: List Supported Cloud Providers and Regions
+- name: Error Catalog
+  description: List and get the error definitions from the error catalog.
+- name: Processors
+  description: "The API that allow the user to retrieve, create or delete Processors\
+    \ of a Bridge instance."
+- name: Sink Connectors
+  description: "The API that allow the user to retrieve, create or delete Sink Connectors\
+    \ to be used with smart-events."
+- name: Source Connectors
+  description: "The API that allow the user to retrieve, create or delete Source Connectors\
+    \ to be used with smart-events."
+paths:
+  /api/smartevents_mgmt/v2/bridges:
+    get:
+      tags:
+      - Bridges
+      summary: Get the list of Bridge instances
+      description: Get the list of Bridge instances for the authenticated user.
+      operationId: BridgesAPI_getBridges
+      parameters:
+      - name: name
+        in: query
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          format: int32
+          default: 0
+          minimum: 0
+          type: integer
+      - name: size
+        in: query
+        schema:
+          format: int32
+          default: 100
+          maximum: 100
+          minimum: 1
+          type: integer
+      - name: status
+        in: query
+        schema:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ManagedResourceStatus'
+      responses:
+        "200":
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BridgeListResponse'
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "401":
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "403":
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "404":
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+      security:
+      - bearer: []
+    post:
+      tags:
+      - Bridges
+      summary: Create a Bridge instance
+      description: Create a Bridge instance for the authenticated user.
+      operationId: BridgesAPI_createBridge
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BridgeRequest'
+      responses:
+        "202":
+          description: Accepted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BridgeResponse'
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "401":
+          description: Unauthorized.
+        "402":
+          description: Not enough quota.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "403":
+          description: Forbidden.
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+      security:
+      - bearer: []
+  /api/smartevents_mgmt/v2/bridges/{bridgeId}:
+    get:
+      tags:
+      - Bridges
+      summary: Get a Bridge instance
+      description: Get a Bridge instance of the authenticated user by ID.
+      operationId: BridgesAPI_getBridge
+      parameters:
+      - name: bridgeId
+        in: path
+        required: true
+        schema:
+          minLength: 1
+          type: string
+      responses:
+        "200":
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BridgeResponse'
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "401":
+          description: Unauthorized.
+        "403":
+          description: Forbidden.
+        "404":
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+      security:
+      - bearer: []
+    delete:
+      tags:
+      - Bridges
+      summary: Delete a Bridge instance
+      description: Delete a Bridge instance of the authenticated user by ID.
+      operationId: BridgesAPI_deleteBridge
+      parameters:
+      - name: bridgeId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "202":
+          description: Accepted.
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "401":
+          description: Unauthorized.
+        "403":
+          description: Forbidden.
+        "404":
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+      security:
+      - bearer: []
+  /api/smartevents_mgmt/v2/bridges/{bridgeId}/processors:
+    get:
+      tags:
+      - Processors
+      summary: Get the list of Processors of a Bridge instance
+      description: Get the list of Processors of a Bridge instance for the authenticated
+        user.
+      operationId: ProcessorsAPI_getProcessors
+      parameters:
+      - name: bridgeId
+        in: path
+        required: true
+        schema:
+          minLength: 1
+          type: string
+      - name: name
+        in: query
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          format: int32
+          default: 0
+          minimum: 0
+          type: integer
+      - name: size
+        in: query
+        schema:
+          format: int32
+          default: 100
+          maximum: 100
+          minimum: 1
+          type: integer
+      - name: status
+        in: query
+        schema:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ManagedResourceStatus'
+      responses:
+        "200":
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessorListResponse'
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "401":
+          description: Unauthorized.
+        "403":
+          description: Forbidden.
+        "404":
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+      security:
+      - bearer: []
+    post:
+      tags:
+      - Processors
+      summary: Create a Processor of a Bridge instance
+      description: Create a Processor of a Bridge instance for the authenticated user.
+      operationId: ProcessorsAPI_createProcessor
+      parameters:
+      - name: bridgeId
+        in: path
+        required: true
+        schema:
+          minLength: 1
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProcessorRequest'
+      responses:
+        "202":
+          description: Accepted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessorResponse'
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "401":
+          description: Unauthorized.
+        "402":
+          description: Not enough quota.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "403":
+          description: Forbidden.
+        "404":
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+      security:
+      - bearer: []
+  /api/smartevents_mgmt/v2/bridges/{bridgeId}/processors/{processorId}:
+    get:
+      tags:
+      - Processors
+      summary: Get a Processor of a Bridge instance
+      description: Get a Processor of a Bridge instance for the authenticated user.
+      operationId: ProcessorsAPI_getProcessor
+      parameters:
+      - name: bridgeId
+        in: path
+        required: true
+        schema:
+          minLength: 1
+          type: string
+      - name: processorId
+        in: path
+        required: true
+        schema:
+          minLength: 1
+          type: string
+      responses:
+        "200":
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessorResponse'
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "401":
+          description: Unauthorized.
+        "403":
+          description: Forbidden.
+        "404":
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+      security:
+      - bearer: []
+    put:
+      tags:
+      - Processors
+      summary: Update a Processor instance.
+      description: Update a Processor instance for the authenticated user.
+      operationId: ProcessorsAPI_updateProcessor
+      parameters:
+      - name: bridgeId
+        in: path
+        required: true
+        schema:
+          minLength: 1
+          type: string
+      - name: processorId
+        in: path
+        required: true
+        schema:
+          minLength: 1
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProcessorRequest'
+      responses:
+        "202":
+          description: Accepted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessorResponse'
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "401":
+          description: Unauthorized.
+        "403":
+          description: Forbidden.
+        "404":
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+      security:
+      - bearer: []
+    delete:
+      tags:
+      - Processors
+      summary: Delete a Processor of a Bridge instance
+      description: Delete a Processor of a Bridge instance for the authenticated user.
+      operationId: ProcessorsAPI_deleteProcessor
+      parameters:
+      - name: bridgeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: processorId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "202":
+          description: Accepted.
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "401":
+          description: Unauthorized.
+        "403":
+          description: Forbidden.
+        "404":
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+      security:
+      - bearer: []
+  /api/smartevents_mgmt/v2/bridges/{bridgeId}/sinks:
+    get:
+      tags:
+      - Sink Connectors
+      summary: Get the list of Sink Connectors for a Bridge
+      description: Get the list of Sink Connector instances of a Bridge instance for
+        the authenticated user.
+      operationId: SinkConnectorsAPI_getSinkConnectors
+      parameters:
+      - name: bridgeId
+        in: path
+        required: true
+        schema:
+          minLength: 1
+          type: string
+      - name: name
+        in: query
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          format: int32
+          default: 0
+          minimum: 0
+          type: integer
+      - name: size
+        in: query
+        schema:
+          format: int32
+          default: 100
+          maximum: 100
+          minimum: 1
+          type: integer
+      - name: status
+        in: query
+        schema:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ManagedResourceStatus'
+      responses:
+        "200":
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SinkConnectorListResponse'
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "401":
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "403":
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "404":
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+      security:
+      - bearer: []
+    post:
+      tags:
+      - Sink Connectors
+      summary: Create a Sink Connector for a Bridge instance
+      description: Create a Sink Connector of a Bridge instance for the authenticated
+        user.
+      operationId: SinkConnectorsAPI_createSinkConnector
+      parameters:
+      - name: bridgeId
+        in: path
+        required: true
+        schema:
+          minLength: 1
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConnectorRequest'
+      responses:
+        "202":
+          description: Accepted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SinkConnectorResponse'
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "401":
+          description: Unauthorized.
+        "402":
+          description: Not enough quota.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "403":
+          description: Forbidden.
+        "404":
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+      security:
+      - bearer: []
+  /api/smartevents_mgmt/v2/bridges/{bridgeId}/sinks/{sinkId}:
+    get:
+      tags:
+      - Sink Connectors
+      summary: Get a Sink Connector of a Bridge instance
+      description: Get a Sink Connector of a Bridge instance for the authenticated
+        user.
+      operationId: SinkConnectorsAPI_getSinkConnector
+      parameters:
+      - name: bridgeId
+        in: path
+        required: true
+        schema:
+          minLength: 1
+          type: string
+      - name: sinkId
+        in: path
+        required: true
+        schema:
+          minLength: 1
+          type: string
+      responses:
+        "200":
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SinkConnectorResponse'
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "401":
+          description: Unauthorized.
+        "403":
+          description: Forbidden.
+        "404":
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+      security:
+      - bearer: []
+    put:
+      tags:
+      - Sink Connectors
+      summary: Update a Sink Connector instance.
+      description: Update a Sink Connector instance for the authenticated user.
+      operationId: SinkConnectorsAPI_updateSinkConnector
+      parameters:
+      - name: bridgeId
+        in: path
+        required: true
+        schema:
+          minLength: 1
+          type: string
+      - name: sinkId
+        in: path
+        required: true
+        schema:
+          minLength: 1
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConnectorRequest'
+      responses:
+        "202":
+          description: Accepted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SinkConnectorResponse'
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "401":
+          description: Unauthorized.
+        "403":
+          description: Forbidden.
+        "404":
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+      security:
+      - bearer: []
+    delete:
+      tags:
+      - Sink Connectors
+      summary: Delete a Sink Connector of a Bridge instance
+      description: Delete a Sink Connector of a Bridge instance for the authenticated
+        user.
+      operationId: SinkConnectorsAPI_deleteSinkConnector
+      parameters:
+      - name: bridgeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: sinkId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "202":
+          description: Accepted.
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "401":
+          description: Unauthorized.
+        "403":
+          description: Forbidden.
+        "404":
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+      security:
+      - bearer: []
+  /api/smartevents_mgmt/v2/bridges/{bridgeId}/sources:
+    get:
+      tags:
+      - Source Connectors
+      summary: Get the list of Sink Connectors for a Bridge
+      description: Get the list of Source Connector instances of a Bridge instance
+        instance for the authenticated user.
+      operationId: SourceConnectorsAPI_getSourceConnectors
+      parameters:
+      - name: bridgeId
+        in: path
+        required: true
+        schema:
+          minLength: 1
+          type: string
+      - name: name
+        in: query
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          format: int32
+          default: 0
+          minimum: 0
+          type: integer
+      - name: size
+        in: query
+        schema:
+          format: int32
+          default: 100
+          maximum: 100
+          minimum: 1
+          type: integer
+      - name: status
+        in: query
+        schema:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ManagedResourceStatus'
+      responses:
+        "200":
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SourceConnectorListResponse'
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "401":
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "403":
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "404":
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+      security:
+      - bearer: []
+    post:
+      tags:
+      - Source Connectors
+      summary: Create a Source Connector for a Bridge instance
+      description: Create a Source Connector of a Bridge instance for the authenticated
+        user.
+      operationId: SourceConnectorsAPI_createSourceConnector
+      parameters:
+      - name: bridgeId
+        in: path
+        required: true
+        schema:
+          minLength: 1
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConnectorRequest'
+      responses:
+        "202":
+          description: Accepted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SourceConnectorResponse'
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "401":
+          description: Unauthorized.
+        "402":
+          description: Not enough quota.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "403":
+          description: Forbidden.
+        "404":
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+      security:
+      - bearer: []
+  /api/smartevents_mgmt/v2/bridges/{bridgeId}/sources/{sourceId}:
+    get:
+      tags:
+      - Source Connectors
+      summary: Get a Source Connector of a Bridge instance
+      description: Get a Source Connector of a Bridge instance for the authenticated
+        user.
+      operationId: SourceConnectorsAPI_getSourceConnector
+      parameters:
+      - name: bridgeId
+        in: path
+        required: true
+        schema:
+          minLength: 1
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        schema:
+          minLength: 1
+          type: string
+      responses:
+        "200":
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SourceConnectorResponse'
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "401":
+          description: Unauthorized.
+        "403":
+          description: Forbidden.
+        "404":
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+      security:
+      - bearer: []
+    put:
+      tags:
+      - Source Connectors
+      summary: Update a Source Connector instance.
+      description: Update a Source Connector instance for the authenticated user.
+      operationId: SourceConnectorsAPI_updateSourceConnector
+      parameters:
+      - name: bridgeId
+        in: path
+        required: true
+        schema:
+          minLength: 1
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        schema:
+          minLength: 1
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConnectorRequest'
+      responses:
+        "202":
+          description: Accepted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SourceConnectorResponse'
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "401":
+          description: Unauthorized.
+        "403":
+          description: Forbidden.
+        "404":
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+      security:
+      - bearer: []
+    delete:
+      tags:
+      - Source Connectors
+      summary: Delete a Source Connector of a Bridge instance
+      description: Delete a Source Connector of a Bridge instance for the authenticated
+        user.
+      operationId: SourceConnectorsAPI_deleteSourceConnector
+      parameters:
+      - name: bridgeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "202":
+          description: Accepted.
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "401":
+          description: Unauthorized.
+        "403":
+          description: Forbidden.
+        "404":
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+      security:
+      - bearer: []
+  /api/smartevents_mgmt/v2/cloud_providers:
+    get:
+      tags:
+      - Cloud Providers
+      summary: List Supported Cloud Providers.
+      description: Returns the list of supported Cloud Providers.
+      operationId: CloudProviderAPI_listCloudProviders
+      parameters:
+      - name: page
+        in: query
+        schema:
+          format: int32
+          default: 0
+          minimum: 0
+          type: integer
+      - name: size
+        in: query
+        schema:
+          format: int32
+          default: 100
+          maximum: 100
+          minimum: 1
+          type: integer
+      responses:
+        "200":
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudProviderListResponse'
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+  /api/smartevents_mgmt/v2/cloud_providers/{id}:
+    get:
+      tags:
+      - Cloud Providers
+      summary: Get Cloud Provider.
+      description: Get details of the Cloud Provider specified by id.
+      operationId: CloudProviderAPI_getCloudProvider
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          minLength: 1
+          type: string
+      responses:
+        "200":
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudProviderListResponse'
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "404":
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+  /api/smartevents_mgmt/v2/cloud_providers/{id}/regions:
+    get:
+      tags:
+      - Cloud Providers
+      summary: List Supported Cloud Regions.
+      description: Returns the list of supported Regions of the specified Cloud Provider.
+      operationId: CloudProviderAPI_listCloudProviderRegions
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          minLength: 1
+          type: string
+      - name: page
+        in: query
+        schema:
+          format: int32
+          default: 0
+          minimum: 0
+          type: integer
+      - name: size
+        in: query
+        schema:
+          format: int32
+          default: 100
+          maximum: 100
+          minimum: 1
+          type: integer
+      responses:
+        "200":
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudRegionListResponse'
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+  /api/smartevents_mgmt/v2/errors:
+    get:
+      tags:
+      - Error Catalog
+      summary: Get the list of errors.
+      description: Get the list of errors from the error catalog.
+      operationId: ErrorsAPI_getErrors
+      parameters:
+      - name: page
+        in: query
+        schema:
+          format: int32
+          default: 0
+          minimum: 0
+          type: integer
+      - name: size
+        in: query
+        schema:
+          format: int32
+          default: 100
+          maximum: 100
+          minimum: 1
+          type: integer
+      responses:
+        "200":
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorListResponse'
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "401":
+          description: Unauthorized.
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+  /api/smartevents_mgmt/v2/errors/{id}:
+    get:
+      tags:
+      - Error Catalog
+      summary: Get an error from the error catalog.
+      description: Get an error from the error catalog.
+      operationId: ErrorsAPI_getError
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          format: int32
+          type: integer
+      responses:
+        "200":
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BridgeError'
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+        "401":
+          description: Unauthorized.
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorsList'
+components:
+  schemas:
+    BridgeError:
+      type: object
+      properties:
+        id:
+          format: int32
+          type: integer
+        code:
+          type: string
+        reason:
+          type: string
+        type:
+          $ref: '#/components/schemas/BridgeErrorType'
+    BridgeErrorInstance:
+      type: object
+      properties:
+        id:
+          format: int32
+          type: integer
+        code:
+          type: string
+        reason:
+          type: string
+        type:
+          $ref: '#/components/schemas/BridgeErrorType'
+        uuid:
+          type: string
+    BridgeErrorType:
+      enum:
+      - USER
+      - PLATFORM
+      type: string
+    BridgeListResponse:
+      required:
+      - kind
+      - page
+      - size
+      - total
+      type: object
+      properties:
+        kind:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/BridgeResponse'
+        page:
+          format: int64
+          type: integer
+        size:
+          format: int64
+          type: integer
+        total:
+          format: int64
+          type: integer
+    BridgeRequest:
+      required:
+      - name
+      - cloud_provider
+      - region
+      type: object
+      properties:
+        name:
+          description: The name of the bridge
+          minLength: 1
+          type: string
+          example: bridge1
+        cloud_provider:
+          description: The cloud provider where the bridge resides
+          minLength: 1
+          type: string
+          example: aws
+        region:
+          description: The cloud provider region where the bridge resides
+          minLength: 1
+          type: string
+          example: us-east-1
+    BridgeResponse:
+      required:
+      - kind
+      - id
+      - name
+      - href
+      - submitted_at
+      - status
+      - owner
+      type: object
+      properties:
+        kind:
+          description: The kind (type) of this resource
+          type: string
+        id:
+          description: The unique identifier of this resource
+          type: string
+        name:
+          description: The name of this resource
+          type: string
+          example: resourceName1
+        href:
+          description: "The URL of this resource, without the protocol"
+          type: string
+          example: example.com/resource
+        submitted_at:
+          $ref: '#/components/schemas/ZonedDateTime'
+        published_at:
+          $ref: '#/components/schemas/ZonedDateTime'
+        modified_at:
+          $ref: '#/components/schemas/ZonedDateTime'
+        status:
+          allOf:
+          - $ref: '#/components/schemas/ManagedResourceStatus'
+          - description: The status of this resource
+            example: ready
+        owner:
+          description: The user that owns this resource
+          type: string
+          example: userName
+        endpoint:
+          description: The HTTPS endpoint on which the bridge accepts events
+          type: string
+          example: https://example.com/bridge
+        cloud_provider:
+          description: The cloud provider where the bridge resides
+          type: string
+          example: aws
+        region:
+          description: The cloud provider region where the bridge resides
+          type: string
+          example: us-east
+        status_message:
+          description: A detailed status message in case there is a problem with the
+            bridge
+          type: string
+    CloudProviderListResponse:
+      required:
+      - kind
+      - page
+      - size
+      - total
+      type: object
+      properties:
+        kind:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CloudProviderResponse'
+        page:
+          format: int64
+          type: integer
+        size:
+          format: int64
+          type: integer
+        total:
+          format: int64
+          type: integer
+    CloudProviderResponse:
+      required:
+      - kind
+      - id
+      - name
+      - href
+      - display_name
+      - enabled
+      type: object
+      properties:
+        kind:
+          description: The kind (type) of this resource
+          type: string
+        id:
+          description: The unique identifier of this resource
+          type: string
+        name:
+          description: The name of this resource
+          type: string
+          example: resourceName1
+        href:
+          description: "The URL of this resource, without the protocol"
+          type: string
+          example: example.com/resource
+        display_name:
+          type: string
+        enabled:
+          type: boolean
+    CloudRegionListResponse:
+      required:
+      - kind
+      - page
+      - size
+      - total
+      type: object
+      properties:
+        kind:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CloudRegionResponse'
+        page:
+          format: int64
+          type: integer
+        size:
+          format: int64
+          type: integer
+        total:
+          format: int64
+          type: integer
+    CloudRegionResponse:
+      required:
+      - kind
+      - name
+      - display_name
+      - enabled
+      type: object
+      properties:
+        kind:
+          type: string
+        name:
+          type: string
+        display_name:
+          type: string
+        enabled:
+          type: boolean
+    ConnectorRequest:
+      required:
+      - name
+      - connector_type_id
+      - connector
+      type: object
+      properties:
+        name:
+          description: The name of the connector
+          minLength: 1
+          type: string
+          example: my-connector
+        connector_type_id:
+          description: The name of the connector
+          minLength: 1
+          type: string
+          example: slack_sink_0.1
+        connector:
+          description: The Connector configuration payload
+          type: object
+    Error:
+      required:
+      - kind
+      - id
+      - name
+      - href
+      - reason
+      type: object
+      properties:
+        kind:
+          description: The kind (type) of this resource
+          type: string
+        id:
+          description: The unique identifier of this resource
+          type: string
+        name:
+          description: The name of this resource
+          type: string
+          example: resourceName1
+        href:
+          description: "The URL of this resource, without the protocol"
+          type: string
+          example: example.com/resource
+        code:
+          type: string
+        reason:
+          type: string
+    ErrorListResponse:
+      required:
+      - kind
+      - page
+      - size
+      - total
+      type: object
+      properties:
+        kind:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+        page:
+          format: int64
+          type: integer
+        size:
+          format: int64
+          type: integer
+        total:
+          format: int64
+          type: integer
+    ErrorsList:
+      required:
+      - kind
+      type: object
+      properties:
+        kind:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+    List:
+      allOf:
+      - $ref: '#/components/schemas/ListResponse'
+      - required:
+        - page
+        - size
+        - total
+        type: object
+        properties:
+          page:
+            format: int64
+            type: integer
+          size:
+            format: int64
+            type: integer
+          total:
+            format: int64
+            type: integer
+    ListResponse:
+      required:
+      - kind
+      type: object
+      properties:
+        kind:
+          type: string
+        items:
+          type: array
+          items:
+            type: object
+    ManagedResourceStatus:
+      enum:
+      - accepted
+      - preparing
+      - provisioning
+      - ready
+      - update_accepted
+      - update_preparing
+      - update_provisioning
+      - deprovision
+      - deleting
+      - deleted
+      - failed
+      type: string
+    ObjectReference:
+      required:
+      - kind
+      - id
+      - name
+      - href
+      type: object
+      properties:
+        kind:
+          description: The kind (type) of this resource
+          type: string
+        id:
+          description: The unique identifier of this resource
+          type: string
+        name:
+          description: The name of this resource
+          type: string
+          example: resourceName1
+        href:
+          description: "The URL of this resource, without the protocol"
+          type: string
+          example: example.com/resource
+    ProcessingErrorListResponse:
+      required:
+      - kind
+      - page
+      - size
+      - total
+      type: object
+      properties:
+        kind:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProcessingErrorResponse'
+        page:
+          format: int64
+          type: integer
+        size:
+          format: int64
+          type: integer
+        total:
+          format: int64
+          type: integer
+    ProcessingErrorResponse:
+      type: object
+      properties:
+        recorded_at:
+          $ref: '#/components/schemas/ZonedDateTime'
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+        payload:
+          type: object
+    ProcessorListResponse:
+      required:
+      - kind
+      - page
+      - size
+      - total
+      type: object
+      properties:
+        kind:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProcessorResponse'
+        page:
+          format: int64
+          type: integer
+        size:
+          format: int64
+          type: integer
+        total:
+          format: int64
+          type: integer
+    ProcessorRequest:
+      required:
+      - name
+      - flows
+      type: object
+      properties:
+        name:
+          description: The name of the processor
+          minLength: 1
+          type: string
+          example: processor1
+        flows:
+          description: "The Camel YAML DSL code, formatted as JSON, that defines the\
+            \ flows in the processor"
+          type: object
+    ProcessorResponse:
+      required:
+      - kind
+      - id
+      - name
+      - href
+      - submitted_at
+      - status
+      - owner
+      - flows
+      type: object
+      properties:
+        kind:
+          description: The kind (type) of this resource
+          type: string
+        id:
+          description: The unique identifier of this resource
+          type: string
+        name:
+          description: The name of this resource
+          type: string
+          example: resourceName1
+        href:
+          description: "The URL of this resource, without the protocol"
+          type: string
+          example: example.com/resource
+        submitted_at:
+          $ref: '#/components/schemas/ZonedDateTime'
+        published_at:
+          $ref: '#/components/schemas/ZonedDateTime'
+        modified_at:
+          $ref: '#/components/schemas/ZonedDateTime'
+        status:
+          allOf:
+          - $ref: '#/components/schemas/ManagedResourceStatus'
+          - description: The status of this resource
+            example: ready
+        owner:
+          description: The user that owns this resource
+          type: string
+          example: userName
+        flows:
+          description: "The Camel YAML DSL code, formatted as JSON, that defines the\
+            \ flows in the processor"
+          type: object
+        status_message:
+          type: string
+    SinkConnectorListResponse:
+      required:
+      - kind
+      - page
+      - size
+      - total
+      type: object
+      properties:
+        kind:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SinkConnectorResponse'
+        page:
+          format: int64
+          type: integer
+        size:
+          format: int64
+          type: integer
+        total:
+          format: int64
+          type: integer
+    SinkConnectorResponse:
+      required:
+      - kind
+      - id
+      - name
+      - href
+      - submitted_at
+      - status
+      - owner
+      - connector_type_id
+      - connector
+      - uri_dsl
+      type: object
+      properties:
+        kind:
+          description: The kind (type) of this resource
+          type: string
+        id:
+          description: The unique identifier of this resource
+          type: string
+        name:
+          description: The name of this resource
+          type: string
+          example: resourceName1
+        href:
+          description: "The URL of this resource, without the protocol"
+          type: string
+          example: example.com/resource
+        submitted_at:
+          $ref: '#/components/schemas/ZonedDateTime'
+        published_at:
+          $ref: '#/components/schemas/ZonedDateTime'
+        modified_at:
+          $ref: '#/components/schemas/ZonedDateTime'
+        status:
+          allOf:
+          - $ref: '#/components/schemas/ManagedResourceStatus'
+          - description: The status of this resource
+            example: ready
+        owner:
+          description: The user that owns this resource
+          type: string
+          example: userName
+        connector_type_id:
+          description: The connector type
+          type: string
+          example: slack_sink_0.1
+        connector:
+          description: The Connector configuration payload
+          type: object
+        status_message:
+          description: A detailed status message in case there is a problem with the
+            connector
+          type: string
+        uri_dsl:
+          description: The URI to be used in Camel DSL to send data to this sink
+          type: string
+          example: knative:my-id
+    SourceConnectorListResponse:
+      required:
+      - kind
+      - page
+      - size
+      - total
+      type: object
+      properties:
+        kind:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SourceConnectorResponse'
+        page:
+          format: int64
+          type: integer
+        size:
+          format: int64
+          type: integer
+        total:
+          format: int64
+          type: integer
+    SourceConnectorResponse:
+      required:
+      - kind
+      - id
+      - name
+      - href
+      - submitted_at
+      - status
+      - owner
+      - connector_type_id
+      - connector
+      type: object
+      properties:
+        kind:
+          description: The kind (type) of this resource
+          type: string
+        id:
+          description: The unique identifier of this resource
+          type: string
+        name:
+          description: The name of this resource
+          type: string
+          example: resourceName1
+        href:
+          description: "The URL of this resource, without the protocol"
+          type: string
+          example: example.com/resource
+        submitted_at:
+          $ref: '#/components/schemas/ZonedDateTime'
+        published_at:
+          $ref: '#/components/schemas/ZonedDateTime'
+        modified_at:
+          $ref: '#/components/schemas/ZonedDateTime'
+        status:
+          allOf:
+          - $ref: '#/components/schemas/ManagedResourceStatus'
+          - description: The status of this resource
+            example: ready
+        owner:
+          description: The user that owns this resource
+          type: string
+          example: userName
+        connector_type_id:
+          description: The connector type
+          type: string
+          example: slack_sink_0.1
+        connector:
+          description: The Connector configuration payload
+          type: object
+        status_message:
+          description: A detailed status message in case there is a problem with the
+            connector
+          type: string
+    ZonedDateTime:
+      format: date-time
+      type: string
+      example: 2022-03-10T12:15:50-04:00
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: Bearer

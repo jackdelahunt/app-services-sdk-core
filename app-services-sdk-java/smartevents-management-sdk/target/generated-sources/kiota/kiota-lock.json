@@ -1,0 +1,29 @@
+{
+  "descriptionHash": "9E1741403D04927E920063499524680E3B4B82BF68187FA778FFCACDF24AD34F66D6D70952B0E8F6E24C51DE81BEBF5C3768DD67113893FF26274D62BE8BF292",
+  "descriptionLocation": "/home/runner/work/app-services-sdk-core/app-services-sdk-core/app-services-sdk-java/smartevents-management-sdk/target/openapi-spec/smartevents_mgmt_v2.yaml",
+  "lockFileVersion": "1.0.0",
+  "kiotaVersion": "0.11.1-preview",
+  "clientClassName": "ApiClient",
+  "clientNamespaceName": "com.openshift.cloud.api.smartevents",
+  "language": "Java",
+  "usesBackingStore": false,
+  "includeAdditionalData": true,
+  "serializers": [
+    "Microsoft.Kiota.Serialization.Json.JsonSerializationWriterFactory",
+    "Microsoft.Kiota.Serialization.Text.TextSerializationWriterFactory",
+    "Microsoft.Kiota.Serialization.Form.FormSerializationWriterFactory"
+  ],
+  "deserializers": [
+    "Microsoft.Kiota.Serialization.Json.JsonParseNodeFactory",
+    "Microsoft.Kiota.Serialization.Text.TextParseNodeFactory",
+    "Microsoft.Kiota.Serialization.Form.FormParseNodeFactory"
+  ],
+  "structuredMimeTypes": [
+    "application/json",
+    "text/plain",
+    "application/x-www-form-urlencoded"
+  ],
+  "includePatterns": [],
+  "excludePatterns": [],
+  "disabledValidationRules": []
+}
