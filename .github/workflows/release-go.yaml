@@ -1,0 +1,31 @@
+name: Go Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-version:
+        description: 'Version being released'
+        required: true
+      branch:
+        description: 'Branch to release from'
+        required: true
+        default: 'main'
+
+jobs:
+  release:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Release the new version
+        working-directory: app-services-sdk-java
+        run: |
+          git checkout -b release-${{ github.event.inputs.release-version }}
+          git push origin release-${{ github.event.inputs.release-version }}
+          git tag app-services-sdk-go/v${{ github.event.inputs.release-version }}
+          git push origin app-services-sdk-go/v${{ github.event.inputs.release-version }}
+      - name: Release
+        uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v1
+        with:
+          name: app-services-sdk-go app-services-sdk-go/v${{ github.event.inputs.release-version }} 
+          tag_name: app-services-sdk-go/v${{ github.event.inputs.release-version }}
