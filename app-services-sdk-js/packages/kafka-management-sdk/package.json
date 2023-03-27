@@ -1,5 +1,5 @@
 {
-  "name": "@rhoas/kafka-management-sdk",
+  "name": "jack-kafka-management-sdk",
   "version": "0.0.0",
   "description": "RHOAS Kafka Management SDK",
   "author": "Red Hat Developers",
