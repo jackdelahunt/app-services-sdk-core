@@ -1,6 +1,10 @@
 name: JavaScript Release
 on:
   workflow_dispatch:
+    inputs:
+      release-version:
+        description: 'Version being released as X.Y.Z'
+        required: true
 jobs:
   npm-publish:
     name: npm-publish
@@ -25,9 +29,7 @@ jobs:
       #     cd app-services-sdk-js
       #     yarn semver $GITHUB_REF_SLUG
       - name: Update versions of packages
-        run: |
-          cd app-services-sdk-js
-          yarn setupRelease
+        run: VERSION=${{ github.event.inputs.release-version }} bash scripts/update-js-packages.sh
       - name: Publish packages
         run: |
           cd app-services-sdk-js
