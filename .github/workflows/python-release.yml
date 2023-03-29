@@ -1,0 +1,45 @@
+name: pypi-publish
+on:
+  workflow_dispatch:
+    inputs:
+      release-version:
+        description: 'Version being released as X.Y.Z'
+        required: true
+      branch:
+        description: 'Branch to release from'
+        required: true
+        default: 'main'
+      prerelease:
+        description: 'Indicate wheater this is a pre-release'
+        default: false
+        type: boolean
+jobs:
+  pypi-publish:
+    name: pypi-publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@a362e5fb42057a3a23a62218b050838f1bacca5d #v4
+      - name: Use python
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.x'
+      - name: Install Poetry
+        working-directory: app-services-sdk-python
+        run: make install-setup
+      - name: Update versions of packages
+        working-directory: app-services-sdk-python
+        run: poetry version ${{ github.event.inputs.release-version }}
+      - name: Build Python modules
+        working-directory: app-services-sdk-python
+        run: make build
+      - name: Move dist folder
+        run: cp -r app-services-sdk-python/dist .
+      - name: Publish distribution 📦 to Test PyPI
+        uses: pypa/gh-action-pypi-publish@c7f29f7adef1a245bd91520e94867e5c6eedddcc #release/v1  
+        with:
+          password: ${{ secrets.RHOAS_PYPI_API_TOKEN }}
+      - name: Remove dist
+        run: rm -rf dist/
