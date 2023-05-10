@@ -1,4 +1,4 @@
-name: Java, Go and JS SDK Release
+name: Release all SDKs
 
 on:
   workflow_dispatch:
@@ -22,7 +22,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       
-      # JS SDK
+      # # TS SDK
       # - name: Use Node.js 16.3.0
       #   uses: actions/setup-node@v3
       #   with:
@@ -39,7 +39,7 @@ jobs:
         with:
           python-version: '3.x'
 
-      # Java SDK
+      # # Java SDK
       # - name: Set up JDK 11
       #   uses: actions/setup-java@v3
       #   with:
@@ -52,7 +52,7 @@ jobs:
       #     gpg-private-key: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
       #     gpg-passphrase: MAVEN_GPG_SECRET_KEY_PASSWORD
 
-      # Java SDK
+      # # Java SDK
       # - id: install-secret-key
       #   name: Install gpg secret key for Java
       #   run: |
@@ -60,20 +60,25 @@ jobs:
       #     gpg --list-secret-keys --keyid-format LONG
 
       # Python SDK
+      - name: Generate Python SDK
+        working-directory: app-services-sdk-python
+        run: make generate-sdk
+
+      # Python SDK
       - name: Install Poetry
         working-directory: app-services-sdk-python
         run: make install-setup
 
-      # Java SDK
+      # # Java SDK
       # - name: Compile Java & run tests
       #   env:
       #     OFFLINE_TOKEN: ${{ secrets.OFFLINE_TOKEN }}
       #   working-directory: app-services-sdk-java
       #   run: mvn clean install
 
-      # JS SDK
-      # - name: Compile JavaScript
-      #   working-directory: app-services-sdk-js
+      # # TS SDK
+      # - name: Compile TypeScript
+      #   working-directory: app-services-sdk-ts
       #   run: |
       #     yarn install
       #     yarn build
@@ -84,18 +89,18 @@ jobs:
           git config user.email ci-bot@andreatp.
 
       # Python SDK
-      - name: Update Pytohn to new version
+      - name: Update Python to new version
         working-directory: app-services-sdk-python
         run: poetry version ${{ github.event.inputs.release-version }}
         
-      # Java SDK
+      # # Java SDK
       # - name: Update Java to new version
       #   working-directory: app-services-sdk-java
       #   run:  mvn versions:set -DgenerateBackupPoms=false -DnewVersion=${{ github.event.inputs.release-version }}
 
-      # JS SDK
-      # - name: Update JavaScript package versions 
-      #   run: VERSION=${{ github.event.inputs.release-version }} bash scripts/update-js-packages.sh
+      # # TS SDK
+      # - name: Update TypeScript package versions 
+      #   run: VERSION=${{ github.event.inputs.release-version }} bash scripts/update-ts-packages.sh
 
       # Python SDK
       - name: Build Python modules
@@ -121,7 +126,7 @@ jobs:
         with:
           password: ${{ secrets.RHOAS_PYPI_API_TOKEN }}
 
-      # Java SDK
+      # # Java SDK
       # - name: Publish Java SDK
       #   working-directory: app-services-sdk-java
       #   run : mvn --batch-mode clean deploy -Prelease -DskipTests=true -e
@@ -130,9 +135,9 @@ jobs:
       #     MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
       #     MAVEN_GPG_SECRET_KEY_PASSWORD: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
 
-      # JS SDK
+      # # TS SDK
       # - name: Publish JS SDK
-      #   working-directory: app-services-sdk-js
+      #   working-directory: app-services-sdk-ts
       #   run: |
       #     npm publish --workspace=packages
       #   env:

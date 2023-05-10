@@ -1,3 +1,11 @@
 node_modules
 openapitools.json
 **/target
+**/dist
+app-services-sdk-python/kafka_mgmt_sdk
+app-services-sdk-python/kafka_instance_sdk
+app-services-sdk-python/registry_instance_sdk
+app-services-sdk-python/registry_mgmt_sdk
+app-services-sdk-python/service_accounts_mgmt_sdk
+app-services-sdk-python/connector_mgmt_sdk
+app-services-sdk-python/smart_events_mgmt_sdk
