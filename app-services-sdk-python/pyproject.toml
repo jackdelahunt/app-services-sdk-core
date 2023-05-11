@@ -6,14 +6,14 @@ authors = ["jackdelahunt <jdelahun@redhat.com>"]
 license = "Apache License"
 readme = "docs/README.md"
 packages = [
-    { include = "connector_mgmt_sdk/" },
-    { include = "kafka_instance_sdk/"},
-    { include = "registry_mgmt_sdk/"},
-    { include = "kafka_mgmt_sdk/"},
-    { include = "registry_instance_sdk/"},
-    { include = "smart_events_mgmt_sdk/"},
-    { include = "service_accounts_mgmt_sdk" },
-    { include = "auth"}
+    { include = "connector_mgmt_sdk/**/*.py" },
+    { include = "kafka_instance_sdk/**/*.py"},
+    { include = "registry_mgmt_sdk/**/*.py"},
+    { include = "kafka_mgmt_sdk/**/*.py"},
+    { include = "registry_instance_sdk/**/*.py"},
+    { include = "smart_events_mgmt_sdk/**/*.py"},
+    { include = "service_accounts_mgmt_sdk/**/*.py" },
+    { include = "auth/**/*.py"}
 ]
 
 [tool.poetry.dependencies]

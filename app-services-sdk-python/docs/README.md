@@ -1,1 +1,1 @@
-# KYS
+# App services SDK Python
