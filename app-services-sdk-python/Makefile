@@ -28,7 +28,8 @@ generate-sdk:
 	kiota generate -l python -d ../.openapi/kas-fleet-manager.yaml -o ./kafka_mgmt_sdk 
 	kiota generate -l python -d ../.openapi/registry-instance.json -o ./registry_instance_sdk 
 	kiota generate -l python -d ../.openapi/smartevents_mgmt_v2.yaml -o ./smart_events_mgmt_sdk 
-	kiota generate -l python -d ../.openapi/service-accounts.yaml -o ./service_accounts_mgmt_sdk 
+	kiota generate -l python -d ../.openapi/service-accounts.yaml -o ./service_accounts_mgmt_sdk
+	python3 generate_init.py
 
 # The staggered make target explanations are printed correctly (not staggered) to the console.
 .PHONY: help
